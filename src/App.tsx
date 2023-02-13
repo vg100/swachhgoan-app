@@ -9,12 +9,17 @@ import {
   View,
 } from 'react-native';
 import Routes from './navigations';
+import {Provider} from 'react-redux';
+import store from './redux/store';
 
 function App(): JSX.Element {
  
 
   return (
+    <Provider store={store}>
    <Routes />
+    </Provider>
+
   );
 }
 
