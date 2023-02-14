@@ -1,0 +1,161 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Cabin/Cabin-Italic-VariableFont_wdth,wght.ttf",
+      "sha1": "1820c62d7297d1dbc70c1afafb26d721f24dfdc3"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/Cabin-VariableFont_wdth,wght.ttf",
+      "sha1": "5ad49df392974b43cd015386379a8a2ec2962370"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/OFL.txt",
+      "sha1": "07e3cd6c9c7b5942b72fe0aa92be5ef83c9a9d29"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/README.txt",
+      "sha1": "0686b927ca591f0fca02627f17d555f23f7d6990"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-Bold.ttf",
+      "sha1": "f619a4184ae9d270721235d1f8eb3ebdd4092c8c"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-BoldItalic.ttf",
+      "sha1": "2999c5560643862ff2bdca458dfe5f63763cddfa"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-Italic.ttf",
+      "sha1": "e557e69708beb210f3250707172e3c15538c1810"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-Medium.ttf",
+      "sha1": "fe358017bbe664bc11580403c2c401d2dcce1d4c"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-MediumItalic.ttf",
+      "sha1": "e71f5e6b4e3455e4701aa952683efe3414053344"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-Regular.ttf",
+      "sha1": "7e0e4e3205840d9505bd0eb66cd71c185a022c01"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-SemiBold.ttf",
+      "sha1": "42bb76af8b0f675a6a2de341656ddb5c2f33596f"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin/Cabin-SemiBoldItalic.ttf",
+      "sha1": "c5cdbb599fc84054574e578c7cb7367462556139"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-Bold.ttf",
+      "sha1": "2d5c3fd094fe3a04a7c104b73652290b58913b1c"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-BoldItalic.ttf",
+      "sha1": "d1c6ec5a39b11094e3232886f1502d4dba3a9cbb"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-Italic.ttf",
+      "sha1": "b1fc282e968e89a05a050ec500eb852b87e8d103"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-Medium.ttf",
+      "sha1": "456ab13e6d15c02e0eb94c6347457ef2336f527f"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-MediumItalic.ttf",
+      "sha1": "1d8962bd8739446b493140a544783931d597cdad"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-Regular.ttf",
+      "sha1": "234978ff85e0d8cf70c8500f7099ec1f5a41120a"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-SemiBold.ttf",
+      "sha1": "8613577d4358efcdb722fa6eb480594b44e2aecd"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_Condensed/Cabin_Condensed-SemiBoldItalic.ttf",
+      "sha1": "566c60dac1e0987d8251a07c40654f7ca51ae6d6"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-Bold.ttf",
+      "sha1": "7bdee0b6cc1778e41526c5eeada454919388e5a1"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-BoldItalic.ttf",
+      "sha1": "c8e35b39af051ad6562d94cc76f163cead9b48e7"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-Italic.ttf",
+      "sha1": "95496905b79331556feffccbc64543d62b99d61c"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-Medium.ttf",
+      "sha1": "9b46873869cb020b9fca9a5fc9a02a16390e6b56"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-MediumItalic.ttf",
+      "sha1": "a65b5c3886175c3b65120c974f193c88447fa57e"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-Regular.ttf",
+      "sha1": "0bf45c4b2457e4c2ce783059be39612715c8d438"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-SemiBold.ttf",
+      "sha1": "9e3a03aeb7bd1cc1819cb41b28c1569145c674c6"
+    },
+    {
+      "path": "src/assets/fonts/Cabin/static/Cabin_SemiCondensed/Cabin_SemiCondensed-SemiBoldItalic.ttf",
+      "sha1": "204fc8edadf234d2e217deca53311a75b230f284"
+    },
+    {
+      "path": "src/assets/fonts/Cabin-Italic copy.ttf",
+      "sha1": "e557e69708beb210f3250707172e3c15538c1810"
+    },
+    {
+      "path": "src/assets/fonts/Cabin-Italic.ttf",
+      "sha1": "e557e69708beb210f3250707172e3c15538c1810"
+    },
+    {
+      "path": "src/assets/fonts/Noto_Sans_Tagbanwa/NotoSansTagbanwa-Regular.ttf",
+      "sha1": "e9ec65de4c2a02aea64c27e0eab41ee3e104e9aa"
+    },
+    {
+      "path": "src/assets/fonts/Noto_Sans_Tagbanwa/OFL.txt",
+      "sha1": "a533b1271855d0ffc338593479d2706bbc57560d"
+    },
+    {
+      "path": "src/assets/fonts/Noto_Sans_Tagbanwa.zip",
+      "sha1": "e4df124a142a01b8f79e44bf38b282a63ea4784f"
+    },
+    {
+      "path": "src/assets/images/attendance.png",
+      "sha1": "8156766565e25cc584386efa79a869093d3e0967"
+    },
+    {
+      "path": "src/assets/images/grid.png",
+      "sha1": "564dc5d3aa3233b0af143fe29b8acb219ddec15b"
+    },
+    {
+      "path": "src/assets/images/image.png",
+      "sha1": "28ae42e6545db50adf57677b2b82b0c04b622013"
+    },
+    {
+      "path": "src/assets/images/new_event.png",
+      "sha1": "ff79b679c1edfa7e20d005901a67160b4d1a2e72"
+    },
+    {
+      "path": "src/assets/images/past_event.png",
+      "sha1": "9a9666415a26a2e8ac7313151216f1e70f833de8"
+    },
+    {
+      "path": "src/assets/images/upcoming_event.png",
+      "sha1": "587a5a548874f1fae7acfd87c83ee7ff8895e310"
+    }
+  ]
+}

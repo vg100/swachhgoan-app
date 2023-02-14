@@ -4,7 +4,10 @@ import UserDashboard from '../scenes/UserDashboard';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Event from '../scenes/Event';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, Text } from 'react-native';
+import Attendance from '../scenes/Attendance';
+import NewEvent from '../scenes/NewEvent';
+import Profile from '../scenes/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,11 +15,30 @@ const Stack = createNativeStackNavigator();
 
 export function UserStackScreen() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="user" component={UserDashboard} />
-      <Stack.Screen name="event" component={Event}
-      
+    <Stack.Navigator>
+      <Stack.Screen name="Categories" component={UserDashboard}
+       options={({ route }:any) => ({ 
+        headerRight:route.params && route.params.headerRight
+      })}
       />
+      <Stack.Screen name="event" component={Event}
+  
+       options={({ route }:any) => ({ 
+        title: route.params.title,      
+      })}
+      />
+       <Stack.Screen name="attendance" component={Attendance}
+  
+  options={({ route }:any) => ({ 
+   title: route.params.title,      
+ })}
+ />
+   <Stack.Screen name="newEvent" component={NewEvent}
+  
+  options={({ route }:any) => ({ 
+   title: route.params.title,      
+ })}
+ />
     </Stack.Navigator>
   );
 }
@@ -45,44 +67,30 @@ export function MyTabs() {
     }
   };
   return (
-    <Tab.Navigator 
-    screenOptions={({route}) => { 
-      return ({
-      tabBarIcon: ({focused, color, size}) => {
-        let iconName;
-        if (route.name === 'Category') {
-          iconName = focused ? <Image source={require('../assets/images/attendance.png')} 
-          resizeMode="contain"
-          style={{ width: 25 }}
-          /> : <Image source={require('../assets/images/attendance.png')} 
-          resizeMode="contain"
-          style={{ width: 25 }}
-          />;
-        }
-      },
-    })}}
-    >
+    <Tab.Navigator>
       <Tab.Screen name="Category" component={UserStackScreen} 
-         initialParams={{
-          activeicon: require('../assets/images/attendance.png'),
-          inactiveicon: require('../assets/images/attendance.png'),
+         options={({route}) => ({
+          headerShown: false,
+          tabBarVisible: getTabBarVisibility(route),
+        tabBarIcon: ({ color }) => (
+          <Image source={require("../assets/images/grid.png")} />
+          ),
+        })}
+      />
+       <Tab.Screen name="Attendance" component={Attendance} 
+        options={{
+          tabBarLabel: 'Attendance',
+          tabBarIcon: ({ color }) => (
+          <Image source={require("../assets/images/tab2.png")} />
+          ),
         }}
-         options={({route}) => ({
-          headerShown: false,
-          tabBarVisible: getTabBarVisibility(route),
-        })}
       />
-       <Tab.Screen name="attendance" component={UserStackScreen} 
-         options={({route}) => ({
-          headerShown: false,
-          tabBarVisible: getTabBarVisibility(route),
-        })}
-      />
-       <Tab.Screen name="profile" component={UserStackScreen} 
-         options={({route}) => ({
-          headerShown: false,
-          tabBarVisible: getTabBarVisibility(route),
-        })}
+       <Tab.Screen name="Profile" component={Profile} 
+          options={{
+            tabBarIcon: ({ color }) => (
+            <Image source={require("../assets/images/tab3.png")} />
+            ),
+          }}
       />
     </Tab.Navigator>
   );

@@ -1,57 +1,57 @@
 import axios from "axios"
 import React from "react"
-    import { Text,TextInput,TouchableOpacity,View,FlatList} from "react-native"
+import { Text, TextInput, TouchableOpacity, View, FlatList, Image } from "react-native"
 import { useDispatch } from "react-redux"
 import { AuthRepositry } from "../services/AuthRepositry"
 
 
-const Event=({navigation,route})=>{
-  
-    const backHandler=()=>{
+const Event = ({ navigation, route }) => {
+
+    const backHandler = () => {
         navigation.goBack()
     }
- const data=[
-    {title:"banihal",date:"15th June,2022"},
-    {title:"Batote",date:"19th June,2022"},
-    {title:"banihal",date:"5th June,2022"},
-    {title:"banihal",date:"5th June,2022"}
- ]
+    const data = [
+        { image: require('../assets/images/image.png'), title: "banihal", date: "15th June,2022" },
+        { image: require('../assets/images/image.png'), title: "banihal", date: "15th June,2022" },
+        { image: require('../assets/images/image.png'), title: "banihal", date: "15th June,2022" },
+
+    ]
     return (
         <View style={{
-            flex:1,
-backgroundColor:'white',
-paddingVertical:20
+            flex: 1,
+            backgroundColor: 'white',
+            paddingVertical: 20
         }}>
-<View style={{paddingHorizontal:5,paddingVertical:20,flexDirection:'row',alignItems:'center'}}>
+            {/* <View style={{paddingHorizontal:5,paddingVertical:20,flexDirection:'row',alignItems:'center'}}>
     <TouchableOpacity
     onPress={backHandler}
     >
         <Text>Back</Text>
     </TouchableOpacity>
 <Text style={{fontSize:40}}>{route.params.title}</Text>
-</View>
+</View> */}
 
-<FlatList
-data={data}
-renderItem={({item})=>{
-    return (
-<View style={{marginVertical:10,flexDirection:'row',backgroundColor:'green',marginHorizontal:10}}>
-    <View style={{backgroundColor:'red',padding:35}}>
-        <Text>Image</Text>
-    </View>
-    <View>
-    <Text>{item.title}</Text>
-    <Text>{item.date}</Text>
-    </View>
-</View>
-    )
-}}
-/>
+            <FlatList
+                data={data}
+                renderItem={({ item }) => {
+                    return (
+                        <View style={{ alignItems: 'center', elevation: 1, borderRadius: 10, marginVertical: 10, flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 10 }}>
 
-       
-           
-</View>
-    
+                            <Image
+
+                                source={item.image}
+                            />
+
+                            <View style={{ paddingHorizontal: 10 }}>
+                                <Text style={{ fontSize: 20 }}>{item.title}</Text>
+                                <Text style={{ fontSize: 20 }}>{item.date}</Text>
+                            </View>
+                        </View>
+                    )
+                }}
+            />
+        </View>
+
     )
 }
 export default Event

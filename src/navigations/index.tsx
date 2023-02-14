@@ -17,11 +17,11 @@ import AuthStackScreen from './auth-navigator';
 import { useDispatch, useSelector } from 'react-redux';
 import { AsyncStorageService } from '../services/AsyncStorage';
 import { AuthRepositry } from '../services/AuthRepositry';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Routes = () => {
   const dispatch:any=useDispatch()
   const {user,loggedIn,loggingIn,isAdmin}=useSelector((state:any)=>state.userLogin)
-console.log({user,loggedIn,loggingIn,isAdmin})
   const [loading, setLoading] = React.useState(true);
   React.useEffect(()=>{
     (async()=>{
@@ -36,10 +36,14 @@ console.log({user,loggedIn,loggingIn,isAdmin})
   },[])
   if(loading){
     return (
-      <View><Text>Loading...</Text></View>
+      <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+        <Text style={{fontSize:25,marginVertical:15}}>Swatchh Gaon</Text>
+        <ActivityIndicator size={40} />
+        </View>
     )
   }
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       {
         loggedIn ?(
@@ -51,6 +55,7 @@ console.log({user,loggedIn,loggingIn,isAdmin})
         ): AuthStackScreen()
       }
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

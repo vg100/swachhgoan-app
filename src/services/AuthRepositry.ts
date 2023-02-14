@@ -13,22 +13,28 @@ export class   AuthRepositry {
     return async (dispatch:any) => {
       try {
         dispatch({type: AuthActionTypes.LOGIN_REQUEST});
-        const user = await Api.login(data);
-        console.log(user,'hh')
-        if(user?.user?.role==='admin'){
-          console.log(user)
-          dispatch({
-            type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
-            payload: {...user,isAdmin:true},
-          });
-          await AsyncStorageService.setUser({...user,isAdmin:true});
-        }else{
-          dispatch({
-            type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
-            payload: {...user,isAdmin:false},
-          });
-          await AsyncStorageService.setUser({...user,isAdmin:false});
-        }
+        // const user = await Api.login(data);
+        // console.log(user,'hh')
+        // if(user?.user?.role==='admin'){
+        //   console.log(user)
+        //   dispatch({
+        //     type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
+        //     payload: {...user,isAdmin:true},
+        //   });
+        //   await AsyncStorageService.setUser({...user,isAdmin:true});
+        // }else{
+        //   dispatch({
+        //     type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
+        //     payload: {...user,isAdmin:false},
+        //   });
+        //   await AsyncStorageService.setUser({...user,isAdmin:false});
+        // }
+        dispatch({
+          type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
+          payload: {...data,isAdmin:false},
+        });
+        await AsyncStorageService.setUser({...data,isAdmin:false});
+        data
        
     
         // return user;
