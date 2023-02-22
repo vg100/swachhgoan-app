@@ -3,7 +3,7 @@ import {getEnvVariable} from '../environment';
 import {ToastAndroid} from 'react-native';
 import {AsyncStorageService} from './AsyncStorage';
 export class Http {
-  private static getToken = async () => {
+   static getToken = async () => {
     const user = await AsyncStorageService.getUser();
     return user ? user.token : null;
   };
@@ -30,7 +30,6 @@ export class Http {
 
     try {
       const token = await Http.getToken();
-   
       const response = await Http.axios.post(url, body, config);
       if (response) {
         return response.data;

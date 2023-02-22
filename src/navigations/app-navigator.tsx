@@ -8,6 +8,7 @@ import { Image, Text } from 'react-native';
 import Attendance from '../scenes/Attendance';
 import NewEvent from '../scenes/NewEvent';
 import Profile from '../scenes/Profile';
+import EventDetail from '../scenes/EventDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +25,8 @@ export function UserStackScreen() {
       <Stack.Screen name="event" component={Event}
   
        options={({ route }:any) => ({ 
-        title: route.params.title,      
+        title: route.params.title,  
+        tabBarStyle: { display: "none" },    
       })}
       />
        <Stack.Screen name="attendance" component={Attendance}
@@ -33,11 +35,26 @@ export function UserStackScreen() {
    title: route.params.title,      
  })}
  />
-   <Stack.Screen name="newEvent" component={NewEvent}
+   <Stack.Screen name="newEvent" component={Event}
   
   options={({ route }:any) => ({ 
    title: route.params.title,      
  })}
+ 
+ />
+  <Stack.Screen name="addEvent" component={NewEvent}
+  
+  options={({ route }:any) => ({ 
+   title: route.params.title,      
+ })}
+ 
+ />
+  <Stack.Screen name="eventDetail" component={EventDetail}
+  
+  options={({ route }:any) => ({ 
+   title: route.params.title,      
+ })}
+ 
  />
     </Stack.Navigator>
   );
@@ -52,29 +69,30 @@ export function AdminStackScreen() {
 }
 
 export function MyTabs() {
-
-
-  const getTabBarVisibility = (route:any) => {
-    const routeName = route?.state
-      ? route?.state?.routes[route?.state?.index]?.name
-      : '';
-    switch (routeName) {
-      case 'event':
-        return false;
-
-      default:
-        return true;
-    }
-  };
   return (
     <Tab.Navigator>
       <Tab.Screen name="Category" component={UserStackScreen} 
-         options={({route}) => ({
+        options={({ route }) => ({
           headerShown: false,
-          tabBarVisible: getTabBarVisibility(route),
-        tabBarIcon: ({ color }) => (
+           tabBarIcon: ({ color }) => (
           <Image source={require("../assets/images/grid.png")} />
           ),
+          tabBarStyle: ((route) => {
+
+            const routeName = getFocusedRouteNameFromRoute(route) ?? ""
+            console.log(routeName)
+            switch (routeName) {
+              case "event":
+                case "newEvent":
+                  case "attendance":
+                    case "addEvent":
+                      case "eventDetail":
+                return { display: "none" }
+              default:
+                return
+            }
+            
+          })(route),
         })}
       />
        <Tab.Screen name="Attendance" component={Attendance} 

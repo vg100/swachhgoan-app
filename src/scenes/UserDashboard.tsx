@@ -3,15 +3,19 @@ import React from "react"
 import { Text, TextInput, TouchableOpacity, View, FlatList, Image } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { AuthRepositry } from "../services/AuthRepositry"
+import { EventRepositry } from "../services/EventRepositry"
 
 
 const UserDashboard = ({ navigation, route }) => {
     const dispatch: any = useDispatch()
     const { user, loggedIn, loggingIn, isAdmin } = useSelector((state: any) => state.userLogin)
-    console.log(user, 'user')
+    const { isRefresh } = useSelector((state: any) => state.event)
     const logoutHandler = () => {
         dispatch(AuthRepositry.logout())
     }
+
+
+
 
     const data = [
         {
@@ -54,10 +58,12 @@ const UserDashboard = ({ navigation, route }) => {
         });
 
     }, [navigation])
+
+
+
     return (
         <View style={{
             flex: 1,
-            // backgroundColor:'white',
             paddingVertical: 15,
             marginHorizontal: 10
         }}>
@@ -84,13 +90,13 @@ const UserDashboard = ({ navigation, route }) => {
                                 borderColor: '#D9D0E3'
                             }}>
 
-                            <View style={{ borderColor: '#D9D0E3', borderBottomWidth: 1, justifyContent: 'center', alignItems: "center", paddingVertical: 20 }}>
+                            <View style={{ borderColor: '#D9D0E3', borderBottomWidth: 1, justifyContent: 'center', alignItems: "center", paddingVertical: 20, height: 150 }}>
                                 <Image
-                                    source={item.image}
+                                    source={item.image} style={{ width: 80, height: 80 }}
                                 />
                             </View>
                             <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{item.title}</Text>
+                                <Text style={{ fontFamily: 'Cabin-Bold', fontSize: 15, color: 'black' }}>{item.title}</Text>
                             </View>
 
                         </TouchableOpacity>

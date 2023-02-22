@@ -1,8 +1,9 @@
 import axios from "axios"
 import React from "react"
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
 import { AuthRepositry } from "../services/AuthRepositry"
+import { FloatingTitleTextInputField } from './floating_title_text_input_field';
 
 
 const Login = () => {
@@ -11,49 +12,74 @@ const Login = () => {
     const [password, setPassword] = React.useState('')
     const loginHandler = () => {
         console.log(password, email)
-        if (password !== "" && email !== "") {
+        if (formValues.password !== "" && formValues.email !== "") {
             dispatch(AuthRepositry.login({
-                // email,password
-                // email:email,
-                // password:password
                 email: "user@gmail.com",
                 password: "user",
             }))
         } else {
             Alert.alert("All fields are required!")
         }
+    }
 
+    const [formValues, setFormValues] = React.useState({
+        email: '',
+        password: ''
+    });
+    function _updateMasterState(attrName: any, value: any) {
 
+        console.log(attrName)
+        setFormValues((preval) => {
 
+            return {
+                ...preval,
+                [attrName]: value
+            };
+        });
+        // setState({ [attrName]: value });
     }
     return (
         <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
+            flex: 1
         }}>
-            <View style={{ paddingHorizontal: 5, justifyContent: 'center', height: "50%", width: "50%", backgroundColor: 'white' }}>
+            <Image source={require('../assets/images/image4.png')}
+                style={{ width: '100%' }} />
+            <View style={{ top: '30%', alignItems: 'center', backgroundColor: '#F6F5F5', zIndex: 1, position: 'absolute', height: '100%', width: '100%', borderRadius: 20, padding: 20 }}>
+                {/* <View> */}
 
-                <TextInput
-                    placeholder="email"
-                    style={{ borderWidth: 1 }}
-                    value={email}
+                <View style={{ justifyContent: 'center', marginTop: 5, alignItems: 'center', backgroundColor: 'white', width: 80, height: 80, borderRadius: 50 }}>
+                    <Image source={require('../assets/images/union.png')}
+                        style={{ width: 30, height: 30 }} />
+
+                </View>
+                <Text style={{ fontSize: 20, margin: 5, color: 'black' }}>Login</Text>
+
+                <FloatingTitleTextInputField
+                    attrName='email'
+                    title='Email'
+                    value={formValues.email}
                     onChange={(value: any) => setEmail(value)}
-                    autoFocus={true}
-
+                    updateMasterState={_updateMasterState}
                 />
-                <TextInput
 
-                    placeholder="password"
-                    style={{ borderWidth: 1, marginTop: 5 }}
+                <FloatingTitleTextInputField
+                    attrName='password'
+                    title='Password'
+                    value={formValues.password}
                     onChange={(value: any) => setPassword(value)}
-                    value={password}
-
+                    updateMasterState={_updateMasterState}
                 />
+
                 <TouchableOpacity
                     onPress={loginHandler}
-                    style={{ marginVertical: 5, paddingHorizontal: 5, alignSelf: 'center', backgroundColor: 'yellow' }}>
-                    <Text>Login</Text>
+                    style={stylesSheet.button}>
+                    <Text style={stylesSheet.buttonText}>Login</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={loginHandler}
+                    >
+                    <Text >Dismiss</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -61,3 +87,24 @@ const Login = () => {
     )
 }
 export default Login
+
+const stylesSheet = StyleSheet.create({
+    title: {
+        fontSize: 18,
+        textTransform: 'capitalize',
+    },
+    button: {
+        marginVertical: 30, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        width:'100%', 
+        height: '8%',
+        paddingHorizontal: 5, 
+        backgroundColor: '#0B7CCE',
+        borderRadius: 8
+    },
+    buttonText: {
+        color: 'white'
+
+    }
+});
