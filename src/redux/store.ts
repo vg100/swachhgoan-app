@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { AsyncStorageService } from '../services/AsyncStorage'
 import { EventReducer } from './reducer/eventReducer'
-import { UserReducer } from './reducer/userReducer'
+import { allUsersReducer, UserReducer } from './reducer/userReducer'
 
 const logger=(store:any)=>(next:any)=>(action:any)=>{     //logger  
     if(typeof action==='function') console.log('dispatching a function');  
@@ -17,7 +17,8 @@ const logger=(store:any)=>(next:any)=>(action:any)=>{     //logger
 
 const reducer = combineReducers({
 userLogin: UserReducer,
-event:EventReducer
+event:EventReducer,
+allUsers:allUsersReducer
 })      
 
 const middleware = [logger,thunk]

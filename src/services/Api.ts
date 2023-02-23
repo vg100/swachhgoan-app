@@ -24,4 +24,22 @@ export class Api {
       }
     });
   }
+
+  static async getAllUser(){
+    const token = await Http.getToken();
+    return Http.get('/user/',{
+      headers:{
+        authorization:token
+      }
+    });
+  }
+
+  static async createUser(data:any){
+    const token = await Http.getToken();
+    return Http.post('/user/signup',data,{
+      headers:{
+        authorization:token
+      }
+    });
+  }
 }

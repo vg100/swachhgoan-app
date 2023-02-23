@@ -7,6 +7,14 @@ export enum AuthActionTypes {
   USER_ERROR_OCCURRED = 'User Error Occurred',
   USER_LOGOUT = 'User Logout',
   USER_UPDATE = 'User UPdate',
+
+  ALL_USERS_REQUEST="ALL USERS REQUEST",
+  ALL_USERS_SUCCESS="ALL USERS SUCCESS",
+  ALL_USERS_FAIL="ALL USERS FAIL",
+
+  IS_REFRESH="IS REFRESH"
+
+
 }
 export class   AuthRepositry {
   static login(data:any) {
@@ -14,9 +22,7 @@ export class   AuthRepositry {
       try {
         dispatch({type: AuthActionTypes.LOGIN_REQUEST});
         const user = await Api.login(data);
-        console.log(user,'hh')
         if(user?.user?.role==='admin'){
-          console.log(user)
           dispatch({
             type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
             payload: {...user,isAdmin:true},
@@ -29,15 +35,6 @@ export class   AuthRepositry {
           });
           await AsyncStorageService.setUser({...user,isAdmin:false});
         }
-        // dispatch({
-        //   type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
-        //   payload: {...data,isAdmin:false},
-        // });
-        // await AsyncStorageService.setUser({...data,isAdmin:false});
-        // data
-       
-    
-        // return user;
       } catch (e) {
         console.log(e);
         dispatch({type: AuthActionTypes.USER_ERROR_OCCURRED});
@@ -65,5 +62,32 @@ export class   AuthRepositry {
       return;
     };
   }
+
+  static createUser(data:any){
+    return async (dispatch:any) => {
+      try {
+        const user = await Api.createUser(data);
+        dispatch({ type: AuthActionTypes.IS_REFRESH})
+      console.log(user,'user')
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    };
+  }
+
+  static getAllUser(){
+    return async (dispatch:any) => {
+      dispatch({type: AuthActionTypes.ALL_USERS_REQUEST});
+      try {
+        const user = await Api.getAllUser();
+        dispatch({type: AuthActionTypes.ALL_USERS_SUCCESS,payload:user});
+     
+      } catch (e) {
+        dispatch({type: AuthActionTypes.ALL_USERS_FAIL});
+        return Promise.reject(e);
+      }
+    };
+  }
+  
 
 }

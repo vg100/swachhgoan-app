@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import AdminDashboard from '../scenes/AdminDashboard';
 import UserDashboard from '../scenes/UserDashboard';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,6 +9,8 @@ import Attendance from '../scenes/Attendance';
 import NewEvent from '../scenes/NewEvent';
 import Profile from '../scenes/Profile';
 import EventDetail from '../scenes/EventDetail';
+import Supervisor from '../scenes/Supervisor';
+import AddSupervisor from '../scenes/AddSupervisor';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +18,11 @@ const Stack = createNativeStackNavigator();
 
 export function UserStackScreen() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      animation: 'slide_from_right'
+    }}
+    >
       <Stack.Screen name="Categories" component={UserDashboard}
        options={({ route }:any) => ({ 
         headerRight:route.params && route.params.headerRight
@@ -62,8 +68,23 @@ export function UserStackScreen() {
 
 export function AdminStackScreen() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="admin" component={AdminDashboard} />
+    <Stack.Navigator
+
+    screenOptions={{
+      animation: 'slide_from_right'
+    }}
+    >
+      <Stack.Screen name="Admin Dashboard" component={AdminDashboard} />
+      <Stack.Screen name="supervisors" component={Supervisor} 
+      options={{
+        title: 'Supervisors',
+      }}
+      />
+       <Stack.Screen name="addsupervisor" component={AddSupervisor} 
+      options={{
+        title: 'Create Supervisor',
+      }}
+      />
     </Stack.Navigator>
   );
 }

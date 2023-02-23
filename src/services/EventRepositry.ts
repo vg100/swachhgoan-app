@@ -66,19 +66,12 @@ export class EventRepositry {
         Object.keys(data).forEach((key)=>{
           formData.append(key,data[key])
         })
-        // formData.append('supervisor', "vij");
-        // formData.append('type_of_training', 'none');
-        // formData.append('location', 'rampur');
-        // formData.append('no_of_participant', 100);
-        // formData.append('no_of_males', 25);
-        // formData.append('no_of_females', 25);
         list.forEach(async (image:any) => {
           formData.append('file', image);
         });
         const response=await Api.addNewEvent(formData);
-        console.log(response,'hhh')
+
         dispatch({ type: EventActionTypes.IS_REFRESH})
-        // dispatch({ type: EventActionTypes.ADD_EVENT, payload: eventItem })
       } catch (error) {
         return Promise.reject(error);
       }

@@ -1,23 +1,43 @@
 import axios from "axios"
-import React from "react"
+import React,{useState} from "react"
 import { Text, TextInput, TouchableOpacity, View, FlatList, Image, ScrollView, StyleSheet, Platform } from "react-native"
 import { useDispatch } from "react-redux"
 import { AuthRepositry } from "../services/AuthRepositry"
 import styles from "./../styles/style"
 import { FloatingTitleTextInputField } from './floating_title_text_input_field';
+import { subWeeks, addWeeks, format, subDays } from 'date-fns';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 // import Animated, { useSharedValue } from 'react-native-reanimated';
 // import Icon from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Alert } from "react-native"
 import { EventRepositry } from "../services/EventRepositry"
+import {  AndroidDateInputMode,
+    AndroidPickerMode,
+    AndroidTimeInputMode,
+    MaterialDatetimePickerAndroid,
+    AndroidDatePickerType, } from 'react-native-material-datetime-picker';
 // const myIcon = <Icon name="rocket" size={30} color="#900" />;
+
+const today = new Date();
+const start = subWeeks(today, 1);
+const end = addWeeks(today, 2);
 
 const NewEvent = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()
     const [images, setImages] = React.useState([]);
     const [video, setVideo] = React.useState([]);
     const [mediaType, setMediaType] = React.useState('image')
+    const [date, setDate] = React.useState(new Date());
+    const [time, setTime] = React.useState(new Date());
+    const [currentTime, setCurrentTime] = useState(today);
+    const [currentDate, setCurrentDate] = useState(today);
+    const [currentStartDate, setCurrentStartDate] = useState(today);
+    const [currentEndDate, setCurrentEndDate] = useState(today);
+    const [isVisible, setIsVisible] = useState(false);
+    const [is24Hour, setIs24Hour] = useState(false);
+    const [fullscreen, setFullscreen] = useState(false);
+
     const [formValues, setFormValues] = React.useState({
         supervisor: '',
         training_type: '',
@@ -25,6 +45,8 @@ const NewEvent = ({ navigation, route }: any) => {
         no_participant: '',
         male: '',
         female: '',
+        startDate:'',
+        endDate:''
         // report: ''
     });
     function _updateMasterState(attrName: any, value: any) {
@@ -41,7 +63,12 @@ const NewEvent = ({ navigation, route }: any) => {
     }
 
     const submitHandler = () => {
-        dispatch(EventRepositry.addNewEvent([...images, ...video], formValues))
+        console.log(currentStartDate,currentEndDate)
+        dispatch(EventRepositry.addNewEvent([...images, ...video], {
+            ...formValues,
+            startDate:currentStartDate.toISOString(),
+            endDate:currentEndDate.toISOString()
+        }))
         navigation.goBack()
     }
 
@@ -121,6 +148,34 @@ const NewEvent = ({ navigation, route }: any) => {
             }
         });
     }
+
+    const showDatePicker = () => {
+        const today = new Date();
+        MaterialDatetimePickerAndroid.show({
+            value: currentDate,
+            titleText: 'Select duration of event',
+            mode: AndroidPickerMode.DATE,
+            minimumDate: subDays(currentDate, 1),
+            maximumDate: addWeeks(today, 4),
+            startDate: currentStartDate,
+            endDate: currentEndDate,
+            positiveButtonText: 'OK',
+            negativeButtonText: 'Nah',
+            inputMode: AndroidDateInputMode.CALENDAR,
+            type: AndroidDatePickerType.RANGE,
+            onConfirmDateRange: (startDate, endDate) => {
+                setIsVisible(true)
+              setCurrentStartDate(startDate);
+              setCurrentEndDate(endDate);
+            },
+          });
+      };
+
+      const cancelHandler=()=>{
+        setIsVisible(false)
+        setCurrentStartDate(today);
+        setCurrentEndDate(today);
+      }
     return (
         <View style={{
             flex: 1,
@@ -182,7 +237,37 @@ const NewEvent = ({ navigation, route }: any) => {
                             value={formValues.female}
                             updateMasterState={_updateMasterState}
                         />
+<View
 
+style={{ width: '100%',
+    borderRadius: 8,
+    borderBottomWidth:1,
+    borderColor: 'gray',
+    height: 50,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    paddingHorizontal:5,
+    marginVertical: 6,
+    backgroundColor: 'white'}}>
+        <TouchableOpacity onPress={showDatePicker}>
+{
+    isVisible?<Text style={{color:'black'}}>From {format(currentStartDate, 'PP')} To {format(currentEndDate, 'PP')}</Text>:<Text style={{color:'black'}}>Select Duration</Text>
+}
+</TouchableOpacity>
+{
+      isVisible && (
+        <TouchableOpacity
+        onPress={cancelHandler}
+        style={{backgroundColor:'black',borderRadius:50,height:15,width:15,marginRight:10,justifyContent:'center',alignItems:'center'}}>
+<Text style={{color:'white'}}>x</Text>
+</TouchableOpacity>
+      )
+}
+
+
+    
+</View>
                         <FloatingTitleTextInputField
                             attrName='report'
                             title='Report'
@@ -220,6 +305,7 @@ const NewEvent = ({ navigation, route }: any) => {
                             </TouchableOpacity>
 
                         </View>
+            
                         <TouchableOpacity
                             onPress={submitHandler}
                             style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'blue', paddingHorizontal: 20, paddingVertical: 10, borderRadius: 5, marginVertical: 8 }}>

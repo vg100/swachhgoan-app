@@ -26,4 +26,40 @@ export const UserReducer = (state = initialState, action:any) => {
       }
     }
   };
+
+
+  export const allUsersReducer = (state = { 
+    users: [],
+    isRefresh:false
+  
+  },  action:any) => {
+    switch (action.type) {
+        case AuthActionTypes.ALL_USERS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case AuthActionTypes.ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isRefresh:false,
+                users: action.payload,
+            };
+            case AuthActionTypes.IS_REFRESH:{
+              return {
+                ...state,
+                isRefresh:true
+              }
+            }
+        case AuthActionTypes.ALL_USERS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        default:
+            return state;
+    }
+};
   

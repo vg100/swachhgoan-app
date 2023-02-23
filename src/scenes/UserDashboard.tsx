@@ -14,28 +14,21 @@ const UserDashboard = ({ navigation, route }) => {
         dispatch(AuthRepositry.logout())
     }
 
-
-
-
     const data = [
-        {
-            image: require('../assets/images/past_event.png'),
+        {   image: require('../assets/images/past_event.png'),
             title: "Past Event",
             routeName: 'event'
         },
-        {
-            image: require('../assets/images/attendance.png'),
+        {   image: require('../assets/images/attendance.png'),
             title: "Attendance",
             routeName: 'attendance'
         },
-        {
-            image: require('../assets/images/upcoming_event.png'),
+        {   image: require('../assets/images/upcoming_event.png'),
             title: "Upcoming Event",
             routeName: 'event'
         },
-        {
-            image: require('../assets/images/new_event.png'),
-            title: "New Event",
+        {   image: require('../assets/images/new_event.png'),
+            title: "Ongoing Event",
             routeName: 'newEvent'
         },
     ]

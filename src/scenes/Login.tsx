@@ -8,35 +8,30 @@ import { FloatingTitleTextInputField } from './floating_title_text_input_field';
 
 const Login = () => {
     const dispatch: any = useDispatch()
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    const [formValues, setFormValues] = React.useState({
+        email: '',
+        password: ''
+    });
     const loginHandler = () => {
-        console.log(password, email)
+        console.log(formValues.password)
         if (formValues.password !== "" && formValues.email !== "") {
             dispatch(AuthRepositry.login({
-                email: "user@gmail.com",
-                password: "user",
+                email: formValues.email,
+                password: formValues.password,
             }))
         } else {
             Alert.alert("All fields are required!")
         }
     }
 
-    const [formValues, setFormValues] = React.useState({
-        email: '',
-        password: ''
-    });
+   
     function _updateMasterState(attrName: any, value: any) {
-
-        console.log(attrName)
         setFormValues((preval) => {
-
             return {
                 ...preval,
                 [attrName]: value
             };
         });
-        // setState({ [attrName]: value });
     }
     return (
         <View style={{
@@ -58,7 +53,7 @@ const Login = () => {
                     attrName='email'
                     title='Email'
                     value={formValues.email}
-                    onChange={(value: any) => setEmail(value)}
+               
                     updateMasterState={_updateMasterState}
                 />
 
@@ -66,7 +61,7 @@ const Login = () => {
                     attrName='password'
                     title='Password'
                     value={formValues.password}
-                    onChange={(value: any) => setPassword(value)}
+         
                     updateMasterState={_updateMasterState}
                 />
 

@@ -9,6 +9,7 @@ import { EventRepositry } from "../services/EventRepositry"
 import XLSX from 'xlsx';
 import RNFS from 'react-native-fs';
 import { Utils } from "../utils/utils"
+import { format } from "date-fns"
 
 const Event = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()
@@ -25,6 +26,10 @@ const Event = ({ navigation, route }: any) => {
 dispatch(EventRepositry.getEventList())
     },[isRefresh])
 
+
+
+
+
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -39,6 +44,10 @@ dispatch(EventRepositry.getEventList())
         });
 
     }, [navigation])
+
+
+
+console.log(new Date(eventItems[0]?.startDate),'date')
 
 
     const handleClick = async () => {
@@ -107,7 +116,8 @@ if(eventItems.length < 1){
                             />
                             <View style={{ paddingHorizontal: 10 }}>
                                 <Text style={{ fontSize: 20, textTransform: 'capitalize', fontFamily: 'Cabin-Bold', color: 'black' }}>{item.location.toUpperCase()}</Text>
-                                {/* <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>{item.date}</Text> */}
+                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>Start {item?.startDate}</Text>
+                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>End {item.endDate}</Text>
                             </View>
                         </TouchableOpacity>
                     )

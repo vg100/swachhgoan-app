@@ -2812,6 +2812,11 @@ csstype@^3.0.2:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.1.tgz"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
+date-fns@^2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
+
 dayjs@^1.8.15:
   version "1.11.7"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.7.tgz"
@@ -5948,6 +5953,11 @@ react-native-image-picker@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.0.2.tgz#f7071893df36fd40dec996040e3dfb4e58b4d93a"
   integrity sha512-kl5g22TEiOkHcwKFh+BjdBYb+7LTq0yKXZCjgXCPoHbq7QwckgR4mFASPPoX2RUKGFy6cYqJGc0IX+xpqcSX5w==
+
+react-native-material-datetime-picker@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-material-datetime-picker/-/react-native-material-datetime-picker-0.2.1.tgz#7089fd4001a1a2487da1374a499d873d2bc69de6"
+  integrity sha512-mSb6bOMjBlHUVwjm2jyV+TJa3+6OKCvRMjYpvUrWNBQaEzdUHwKN5ayXdZ1Rw3HmzoU9qe98LAfF8nHS89GwYA==
 
 react-native-safe-area-context@^4.5.0:
   version "4.5.0"
