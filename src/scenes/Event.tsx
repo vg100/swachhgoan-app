@@ -11,6 +11,7 @@ import RNFS from 'react-native-fs';
 import { Utils } from "../utils/utils"
 import { format } from "date-fns"
 import Moment from 'moment';
+import { getEnvVariable } from "../environment"
 const Event = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()
     const { pastEvent, upcomingEvent, eventItems, loading, isRefresh } = useSelector((state: any) => state.event)
@@ -93,13 +94,13 @@ const Event = ({ navigation, route }: any) => {
             <FlatList
                 data={eventItems}
                 renderItem={({ item }) => {
-
+console.log({uri: `${getEnvVariable()?.base_api_url}/${item.files[0]?.replace(/\\/,'/')}`})
                     return (
                         <TouchableOpacity
                             onPress={() => navigation.navigate('eventDetail', { title: "Event Detail", data: item })}
                             style={{ alignItems: 'center', elevation: 1, borderRadius: 10, marginVertical: 10, flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 15, justifyContent: 'space-between' }}>
                             <Image style={{ height: 100, width: "60%", borderRightWidth: 10, borderColor: 'black' }}
-                                source={{ uri: `http://192.168.1.14:5000/${item.files[0]}` }}
+                                source={{ uri: `${getEnvVariable()?.base_api_url}/${item.files[0]?.replace(/\\/,'/')}` }}
                             />
                             <View style={{ paddingHorizontal: 10 }}>
                                 <Text style={{ fontSize: 20, textTransform: 'capitalize', fontFamily: 'Cabin-Bold', color: 'black' }}>{item.location.toUpperCase()}</Text>

@@ -10,6 +10,7 @@ import {  AndroidDateInputMode,
     AndroidTimeInputMode,
     MaterialDatetimePickerAndroid,
     AndroidDatePickerType, } from 'react-native-material-datetime-picker';
+import { getEnvVariable } from "../environment"
     const today = new Date();
 const EventDetail = ({ navigation, route }) => {
     const data=route.params.data;
@@ -43,7 +44,7 @@ borderRadius:20,
     
   }}>
 
-<Image source={{uri:`http://192.168.1.14:5000/${data.files[0]?.replace(/\\/, '/')}`}}  style={{flex: 1,
+<Image  source={{ uri: `${getEnvVariable()?.base_api_url}/${data.files[0]?.replace(/\\/,'/')}` }}  style={{flex: 1,
     width: '100%',
     height: '100%',
     resizeMode: 'cover'
@@ -104,7 +105,7 @@ nestedScrollEnabled
                         }}>
                            <ImageBackground
         imageStyle={{opacity: 0.7}}
-        source={{uri:`http://192.168.1.14:5000/${item?.replace(/\\/, '/')}`}}
+        source={{ uri: `${getEnvVariable()?.base_api_url}/${item?.replace(/\\/,'/')}` }}
         style={{
           justifyContent: 'flex-end',
 
