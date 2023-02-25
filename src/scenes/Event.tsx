@@ -10,10 +10,10 @@ import XLSX from 'xlsx';
 import RNFS from 'react-native-fs';
 import { Utils } from "../utils/utils"
 import { format } from "date-fns"
-
+import Moment from 'moment';
 const Event = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()
-    const { pastEvent, upcomingEvent ,eventItems,loading,isRefresh} = useSelector((state: any) => state.event)
+    const { pastEvent, upcomingEvent, eventItems, loading, isRefresh } = useSelector((state: any) => state.event)
     // React.useEffect(() => {
     //     if (route.params.title === "Past Event") {
     //         dispatch(EventRepositry.getPastEvent())
@@ -22,17 +22,17 @@ const Event = ({ navigation, route }: any) => {
     //     }
     // }, [route.params.title])
 
-        React.useEffect(()=>{
-dispatch(EventRepositry.getEventList())
-    },[isRefresh])
+    React.useEffect(() => {
+        dispatch(EventRepositry.getEventList())
+    }, [isRefresh])
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <TouchableOpacity
-                    onPress={()=>navigation.navigate('addEvent',{title: "Add Event",})}
-                    style={{ backgroundColor: 'indianred', paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
+                        onPress={() => navigation.navigate('addEvent', { title: "Add Event", })}
+                        style={{ backgroundColor: 'indianred', paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
                         <Text style={{ color: 'white' }}>Add Event</Text>
                     </TouchableOpacity >
                 </View>
@@ -78,30 +78,33 @@ dispatch(EventRepositry.getEventList())
 
     };
 
-if(eventItems.length < 1){
- return (
-    <Text>No data!</Text>
- )
-}
+    if (eventItems.length < 1) {
+        return (
+            <Text>No data!</Text>
+        )
+    }
+
     return (
         <View style={{
             flex: 1,
         }}>
+
+
             <FlatList
                 data={eventItems}
                 renderItem={({ item }) => {
-         
+
                     return (
-                        <TouchableOpacity 
-                        onPress={()=>navigation.navigate('eventDetail',{title:"Event Detail",data:item})}
-                        style={{alignItems: 'center', elevation: 1, borderRadius: 10, marginVertical: 10, flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 15, justifyContent: 'space-between' }}>
-                            <Image style={{height:100,width:"60%", borderRightWidth: 10, borderColor: 'black' }}
-                                source={{uri:`http://192.168.1.14:5000/${item.files[0]?.replace(/\\/, '/')}`}}
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('eventDetail', { title: "Event Detail", data: item })}
+                            style={{ alignItems: 'center', elevation: 1, borderRadius: 10, marginVertical: 10, flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 15, justifyContent: 'space-between' }}>
+                            <Image style={{ height: 100, width: "60%", borderRightWidth: 10, borderColor: 'black' }}
+                                source={{ uri: `http://192.168.1.14:5000/${item.files[0]}` }}
                             />
                             <View style={{ paddingHorizontal: 10 }}>
                                 <Text style={{ fontSize: 20, textTransform: 'capitalize', fontFamily: 'Cabin-Bold', color: 'black' }}>{item.location.toUpperCase()}</Text>
-                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>Start {item?.startDate}</Text>
-                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>End {item.endDate}</Text>
+                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>{Moment(item?.startDate).format('d MMM YYYY')} - {Moment(item?.endDate).format('d MMM YYYY')}</Text>
+                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>{item?.location}</Text>
                             </View>
                         </TouchableOpacity>
                     )
