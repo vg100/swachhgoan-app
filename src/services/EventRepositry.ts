@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import { Api } from "./Api";
 
 export enum EventActionTypes {
@@ -70,9 +71,9 @@ export class EventRepositry {
           formData.append('file', image);
         });
         const response=await Api.addNewEvent(formData);
-
         dispatch({ type: EventActionTypes.IS_REFRESH})
       } catch (error) {
+        Alert.alert('gg')
         return Promise.reject(error);
       }
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,21 +7,40 @@ import {
   Text,
   useColorScheme,
   View,
+  LogBox,
+  TextInput
 } from 'react-native';
 import Routes from './navigations';
 import {Provider} from 'react-redux';
 import store from './redux/store';
 
+LogBox.ignoreAllLogs();
+if (Text.defaultProps == null) Text.defaultProps = {};
+if (TextInput.defaultProps == null) TextInput.defaultProps = {};
+Text.defaultProps.allowFontScaling = false;
+TextInput.defaultProps.allowFontScaling = false;
 function App(): JSX.Element {
  
 
   return (
-    <Provider store={store}>
+<Errorr>
+<Provider store={store}>
    <Routes />
     </Provider>
+</Errorr>
 
   );
 }
+
+const Errorr =({children})=>{
+return (
+  <View style={{flex:1}}>
+    <Text>error</Text>
+    {children}
+  </View>
+)
+}
+
 
 const styles = StyleSheet.create({
   sectionContainer: {

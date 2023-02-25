@@ -13,15 +13,19 @@ const Login = () => {
         password: ''
     });
     const loginHandler = () => {
-        console.log(formValues.password)
-        if (formValues.password !== "" && formValues.email !== "") {
-            dispatch(AuthRepositry.login({
-                email: formValues.email,
-                password: formValues.password,
-            }))
-        } else {
-            Alert.alert("All fields are required!")
-        }
+        // console.log(formValues.password)
+        // if (formValues.password !== "" && formValues.email !== "") {
+        //     dispatch(AuthRepositry.login({
+        //         email: formValues.email,
+        //         password: formValues.password,
+        //     }))
+        // } else {
+        //     Alert.alert("All fields are required!")
+        // }
+        dispatch(AuthRepositry.login({
+            email: formValues.email,
+            password: formValues.password,
+        }))
     }
 
    
@@ -29,7 +33,7 @@ const Login = () => {
         setFormValues((preval) => {
             return {
                 ...preval,
-                [attrName]: value
+                [attrName]: value.trim()
             };
         });
     }
@@ -61,7 +65,7 @@ const Login = () => {
                     attrName='password'
                     title='Password'
                     value={formValues.password}
-         
+                    secureTextEntry={true}
                     updateMasterState={_updateMasterState}
                 />
 

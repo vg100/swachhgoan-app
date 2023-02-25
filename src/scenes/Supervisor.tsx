@@ -4,6 +4,7 @@ import { Text, TextInput, TouchableOpacity, View, FlatList, Image } from "react-
 import { useDispatch, useSelector } from "react-redux"
 import { AuthRepositry } from "../services/AuthRepositry"
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Collapsiblee from "../components/collapse"
 
 const Supervisor = ({ navigation, route }) => {
     const dispatch: any = useDispatch()
@@ -35,19 +36,18 @@ const Supervisor = ({ navigation, route }) => {
     return (
         <View style={{
             flex: 1,
-            backgroundColor: 'white',
+      
             paddingVertical: 20,
-            justifyContent: 'center',
-            alignItems: 'center'
+            
         }}>
+
+         
           {
   <FlatList
   data={users}
   renderItem={({item,index})=>{
     return (
-        <View key={index}>
-            <Text>{JSON.stringify(item,null,2)}</Text>
-        </View>
+        <Collapsiblee item={item}/> 
     )
   }}
   />

@@ -14,6 +14,7 @@ export class FloatingTitleTextInputField extends Component {
     titleActiveColor: string, // to control color of title when field is active
     titleInactiveColor: string, // to control color of title when field is active
     textInputStyles: object,
+    secureTextEntry:Boolean,
     otherTextInputProps: object,
   }
 
@@ -97,6 +98,7 @@ export class FloatingTitleTextInputField extends Component {
           onBlur = {this._handleBlur}
           onChangeText = {this._onChangeText}
           keyboardType = {this.props.keyboardType}
+          secureTextEntry={this.props.secureTextEntry}
           {...this.props.otherTextInputProps}
         />
       </View>

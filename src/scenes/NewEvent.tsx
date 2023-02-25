@@ -46,8 +46,8 @@ const NewEvent = ({ navigation, route }: any) => {
         male: '',
         female: '',
         startDate:'',
-        endDate:''
-        // report: ''
+        endDate:'',
+        report: ''
     });
     function _updateMasterState(attrName: any, value: any) {
 
@@ -63,7 +63,6 @@ const NewEvent = ({ navigation, route }: any) => {
     }
 
     const submitHandler = () => {
-        console.log(currentStartDate,currentEndDate)
         dispatch(EventRepositry.addNewEvent([...images, ...video], {
             ...formValues,
             startDate:currentStartDate.toISOString(),

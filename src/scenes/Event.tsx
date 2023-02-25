@@ -26,10 +26,6 @@ const Event = ({ navigation, route }: any) => {
 dispatch(EventRepositry.getEventList())
     },[isRefresh])
 
-
-
-
-
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -45,11 +41,6 @@ dispatch(EventRepositry.getEventList())
 
     }, [navigation])
 
-
-
-console.log(new Date(eventItems[0]?.startDate),'date')
-
-
     const handleClick = async () => {
 
         try {
@@ -57,12 +48,9 @@ console.log(new Date(eventItems[0]?.startDate),'date')
             let isPermitedExternalStorage = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
 
             if (!isPermitedExternalStorage) {
-
-                // Ask for permission
                 const granted: any = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                    {
-                        title: "Storage permission needed",
+                    {   title: "Storage permission needed",
                         buttonNeutral: "Ask Me Later",
                         buttonNegative: "Cancel",
                         buttonPositive: "OK"
@@ -95,14 +83,10 @@ if(eventItems.length < 1){
     <Text>No data!</Text>
  )
 }
-
     return (
         <View style={{
             flex: 1,
-
         }}>
-         
-
             <FlatList
                 data={eventItems}
                 renderItem={({ item }) => {
@@ -112,7 +96,7 @@ if(eventItems.length < 1){
                         onPress={()=>navigation.navigate('eventDetail',{title:"Event Detail",data:item})}
                         style={{alignItems: 'center', elevation: 1, borderRadius: 10, marginVertical: 10, flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 15, justifyContent: 'space-between' }}>
                             <Image style={{height:100,width:"60%", borderRightWidth: 10, borderColor: 'black' }}
-                                source={{uri:`http://192.168.1.14:5000/${item.files[0]}`}}
+                                source={{uri:`http://192.168.1.14:5000/${item.files[0]?.replace(/\\/, '/')}`}}
                             />
                             <View style={{ paddingHorizontal: 10 }}>
                                 <Text style={{ fontSize: 20, textTransform: 'capitalize', fontFamily: 'Cabin-Bold', color: 'black' }}>{item.location.toUpperCase()}</Text>
