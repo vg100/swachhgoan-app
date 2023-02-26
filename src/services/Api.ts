@@ -42,4 +42,15 @@ export class Api {
       },
     });
   }
+
+  static async deleteUser(id: any) {
+    const token = await Http.getToken();
+    return Http.delete(`/user/delete/${id}`,{
+      headers: {
+        authorization: token,
+      },
+    });
+  }
+
+
 }
