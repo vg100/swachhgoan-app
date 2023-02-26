@@ -77,7 +77,6 @@ const NewEvent = ({ navigation, route }: any) => {
         //     selectionLimit:5,
         //     mediaType:"photo"
         //   };
-
         const options: any = {
             title: 'Video Picker',
             mediaType: 'photo',

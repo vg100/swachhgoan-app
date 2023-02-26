@@ -1,4 +1,5 @@
 import axios from "axios"
+
 import React from "react"
 import { Text, TextInput, TouchableOpacity, View, FlatList, Image } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
@@ -10,32 +11,48 @@ const UserDashboard = ({ navigation, route }) => {
     const dispatch: any = useDispatch()
     const { user, loggedIn, loggingIn, isAdmin } = useSelector((state: any) => state.userLogin)
     const { isRefresh } = useSelector((state: any) => state.event)
+    const [data, setdata] = React.useState([
+        {
+            image: require('../assets/images/past_event.png'),
+            title: "Past Event",
+            routeName: 'event',
+
+        },
+        {
+            image: require('../assets/images/attendance.png'),
+            title: "Attendance",
+            routeName: 'attendance',
+
+        },
+        {
+            image: require('../assets/images/upcoming_event.png'),
+            title: "Upcoming Event",
+            routeName: 'event',
+
+        },
+        {
+            image: require('../assets/images/new_event.png'),
+            title: "Ongoing Event",
+            routeName: 'newEvent',
+
+        },
+    ])
     const logoutHandler = () => {
         dispatch(AuthRepositry.logout())
     }
-
+    
     React.useEffect(() => {
         dispatch(EventRepositry.getEventList())
     }, [isRefresh])
 
-    const data = [
-        {   image: require('../assets/images/past_event.png'),
-            title: "Past Event",
-            routeName: 'event'
-        },
-        {   image: require('../assets/images/attendance.png'),
-            title: "Attendance",
-            routeName: 'attendance'
-        },
-        {   image: require('../assets/images/upcoming_event.png'),
-            title: "Upcoming Event",
-            routeName: 'event'
-        },
-        {   image: require('../assets/images/new_event.png'),
-            title: "Ongoing Event",
-            routeName: 'newEvent'
-        },
-    ]
+    React.useEffect(() => {
+        if (isAdmin) {
+            setdata((pre) => pre.filter((d) => d.title !== "Attendance"))
+        }
+    }, [])
+
+    console.log(data, 'dat')
+
 
     const selectCategoryHandler = (index: any) => {
         navigation.navigate(data[index].routeName, { title: data[index].title })
@@ -70,6 +87,7 @@ const UserDashboard = ({ navigation, route }) => {
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={2}
                 renderItem={({ item, index }) => {
+
                     return (
                         <TouchableOpacity
 

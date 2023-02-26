@@ -4,13 +4,14 @@ import UserDashboard from '../scenes/UserDashboard';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Event from '../scenes/Event';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { Image, Text } from 'react-native';
+import { Alert, Image, Text, View } from 'react-native';
 import Attendance from '../scenes/Attendance';
 import NewEvent from '../scenes/NewEvent';
 import Profile from '../scenes/Profile';
 import EventDetail from '../scenes/EventDetail';
 import Supervisor from '../scenes/Supervisor';
 import AddSupervisor from '../scenes/AddSupervisor';
+import Modal from '../scenes/modal';
 
 const Tab = createBottomTabNavigator();
 
@@ -60,8 +61,20 @@ export function UserStackScreen() {
   options={({ route }:any) => ({ 
    title: route.params.title,      
  })}
+
+ 
  
  />
+
+
+<Stack.Screen name="modal"
+options={{
+  headerShown: false,
+}}
+component={Modal} 
+      />
+
+
     </Stack.Navigator>
   );
 }
@@ -85,6 +98,14 @@ export function AdminStackScreen() {
         title: 'Create Supervisor',
       }}
       />
+
+<Stack.Screen name="userstack"
+options={{
+  headerShown: false,
+}}
+component={UserStackScreen} 
+      />
+
     </Stack.Navigator>
   );
 }
@@ -126,10 +147,19 @@ export function MyTabs() {
       />
        <Tab.Screen name="Profile" component={Profile} 
           options={{
+            headerShown: false,
             tabBarIcon: ({ color }) => (
             <Image source={require("../assets/images/tab3.png")} />
             ),
           }}
+       
+          listeners={({navigation}) => ({
+            tabPress: (e) => {
+              e.preventDefault()
+              navigation.navigate('modal')
+            
+            },
+          })}
       />
     </Tab.Navigator>
   );

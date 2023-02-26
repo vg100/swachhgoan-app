@@ -47,7 +47,7 @@ const Supervisor = ({ navigation, route }) => {
   data={users}
   renderItem={({item,index})=>{
     return (
-        <Collapsiblee item={item}/> 
+        <Collapsiblee item={item} navigation={navigation}/> 
     )
   }}
   />

@@ -14,6 +14,7 @@ import Moment from 'moment';
 import { getEnvVariable } from "../environment"
 const Event = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()
+    const { user, loggedIn, loggingIn, isAdmin } = useSelector((state: any) => state.userLogin)
     const {filtedData, eventItems, loading, isRefresh, } = useSelector((state: any) => state.event)
 
  
@@ -35,6 +36,7 @@ const Event = ({ navigation, route }: any) => {
 
 
     React.useLayoutEffect(() => {
+    if (!isAdmin){
         if (route.params.title === "Ongoing Event") { 
             navigation.setOptions({
                 headerRight: () => (
@@ -48,6 +50,8 @@ const Event = ({ navigation, route }: any) => {
                 )
             });
               }
+    }
+       
       
 
     }, [navigation])

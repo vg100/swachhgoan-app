@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Animated, StyleSheet, TextInput } from 'react-native';
-import { string, func, object, number } from 'prop-types';
+import { string, func, object, number,Boolean } from 'prop-types';
 
 export class FloatingTitleTextInputField extends Component {
   static propTypes = {
@@ -26,6 +26,7 @@ export class FloatingTitleTextInputField extends Component {
     titleActiveColor: 'black',
     titleInactiveColor: 'dimgrey',
     textInputStyles: {}, 
+    secureTextEntry:false,
     otherTextInputAttributes: {},
   }
 

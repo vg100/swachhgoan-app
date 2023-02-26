@@ -11,7 +11,7 @@ import {  AndroidDateInputMode,
     MaterialDatetimePickerAndroid,
     AndroidDatePickerType, } from 'react-native-material-datetime-picker';
 import { getEnvVariable } from "../environment"
-    const today = new Date();
+const today = new Date();
 const EventDetail = ({ navigation, route }) => {
     const data=route.params.data;
     const [date, setDate] = React.useState(new Date());
@@ -29,6 +29,11 @@ const EventDetail = ({ navigation, route }) => {
           },
         });
       };
+
+
+
+
+
     return (
       
 <ScrollView contentContainerStyle={{ flexGrow: 1,     padding: 20, }}>
@@ -85,13 +90,13 @@ style={{backgroundColor:'indianred',paddingHorizontal:8,paddingVertical:2,border
 
 </View>
 <Text style={{fontSize:15,fontWeight:'bold',color:'black',marginVertical:5,marginHorizontal:2}}>Files</Text>
-<View>
+<View style={{paddingBottom:200}}>
 
 
 <FlatList
 nestedScrollEnabled
               
-                data={[...data.files,...data.files,...data.files]}
+                data={[...data.files,...data.files]}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={2}
                 renderItem={({ item, index }) => {
@@ -125,7 +130,7 @@ nestedScrollEnabled
 </View>
 
 
-            <Text style={{color:'black'}}>{JSON.stringify(route.params.data,null,2)}</Text>
+            {/* <Text style={{color:'black'}}>{JSON.stringify(route.params.data,null,2)}</Text> */}
            
             </ScrollView>
     
