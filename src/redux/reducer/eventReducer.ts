@@ -3,8 +3,7 @@ import { EventActionTypes } from "../../services/EventRepositry";
 
   const initialState = {
     eventItems: [],
-  pastEvent:[],
-  upcomingEvent:[],
+    filtedData: [],
     loaded: false,
     loading: false,
     isRefresh:false
@@ -37,16 +36,10 @@ import { EventActionTypes } from "../../services/EventRepositry";
         const eventItems = state.eventItems.concat(action.payload);
         return {...state, eventItems};
       }
-      case EventActionTypes.GET_PAST_EVENT: {
+      case EventActionTypes.EVENT_FILTED_DATA: {
         return {
           ...state,
-          pastEvent:action.payload,
-        }
-      }
-      case EventActionTypes.GET_UPCOMING_EVENT: {
-        return {
-          ...state,
-          upcomingEvent:action.payload,
+          filtedData:action.payload,
         }
       }
       case EventActionTypes.USER_LOGOUT: {

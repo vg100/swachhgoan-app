@@ -62,6 +62,7 @@ const Login = () => {
                 />
 
                 <FloatingTitleTextInputField
+                  type='password' 
                     attrName='password'
                     title='Password'
                     value={formValues.password}

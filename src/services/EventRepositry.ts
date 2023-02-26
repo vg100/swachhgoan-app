@@ -11,7 +11,9 @@ export enum EventActionTypes {
   GET_PAST_EVENT = 'Get past event ',
   GET_UPCOMING_EVENT = 'Get upcoming event ',
 
-  IS_REFRESH='isRefresh'
+  IS_REFRESH='isRefresh',
+
+  EVENT_FILTED_DATA='event filtered data',
 }
 
 export class EventRepositry {
@@ -39,23 +41,74 @@ export class EventRepositry {
   static getPastEvent() {
     return async (dispatch: any, getState: any) => {
       const { eventItems } = getState().event
-      const get = eventItems.filter((event: any) => event.location === "allahabad")
+      const get = eventItems.filter((event: any) => {
+        let startDate = new Date(event.startDate);
+        let endDate = new Date(event.endDate);
+        let currentDate = new Date();
+        if(currentDate > startDate && currentDate > endDate ) {
+          return true;
+        }
+        else {
+          return false;
+        }
+
+      })
       dispatch({
-        type: EventActionTypes.GET_PAST_EVENT,
-        payload: eventItems,
+        type: EventActionTypes.EVENT_FILTED_DATA,
+        payload: get,
       });
 
     }
+
+
+    
   }
 
 
   static getUpcomingEvent() {
     return async (dispatch: any, getState: any) => {
       const { eventItems } = getState().event
-      const get = eventItems.filter((event: any) => event.location === "allahabad")
+      const get = eventItems.filter((event: any) => {
+        let startDate = new Date(event.startDate);
+        let endDate = new Date(event.endDate);
+        let currentDate = new Date();
+        if(currentDate < startDate && currentDate < endDate ) {
+          console.log("UpcomingEvent - true")
+          return true;
+        }
+        else {
+          console.log("UpcomingEvent - true")
+          return false;
+        }
+
+      })
       dispatch({
-        type: EventActionTypes.GET_UPCOMING_EVENT,
-        payload: eventItems,
+        type: EventActionTypes.EVENT_FILTED_DATA,
+        payload: get,
+      });
+    }
+  }
+
+  static getOngoingEvent() {
+    return async (dispatch: any, getState: any) => {
+      const { eventItems } = getState().event
+      const get = eventItems.filter((event: any) => {
+        let startDate = new Date(event.startDate);
+        let endDate = new Date(event.endDate);
+        let currentDate = new Date();
+        if(currentDate > startDate && currentDate < endDate ) {
+          console.log("UpcomingEvent - true")
+          return true;
+        }
+        else {
+          console.log("UpcomingEvent - true")
+          return false;
+        }
+
+      })
+      dispatch({
+        type: EventActionTypes.EVENT_FILTED_DATA,
+        payload: get,
       });
     }
   }
