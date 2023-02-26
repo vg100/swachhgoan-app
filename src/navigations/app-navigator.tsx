@@ -10,6 +10,7 @@ import NewEvent from '../scenes/NewEvent';
 import Profile from '../scenes/Profile';
 import EventDetail from '../scenes/EventDetail';
 import Supervisor from '../scenes/Supervisor';
+
 import AddSupervisor from '../scenes/AddSupervisor';
 import Modal from '../scenes/modal';
 
@@ -140,9 +141,9 @@ export function MyTabs() {
       />
       <Tab.Screen
         name="Attendance"
-        component={Attendance}
+        component={NewEvent}
         options={{
-          tabBarLabel: 'Attendance',
+          tabBarLabel: 'Create Event',
           tabBarIcon: ({color}) => (
             <Image source={require('../assets/images/tab2.png')} />
           ),
