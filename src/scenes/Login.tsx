@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  BackHandler 
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';
@@ -38,6 +39,10 @@ const Login = () => {
     );
   };
 
+  const dismissHandler = () => {
+    BackHandler.exitApp();
+  };
+
   function _updateMasterState(attrName: any, value: any) {
     setFormValues(preval => {
       return {
@@ -64,7 +69,7 @@ const Login = () => {
           position: 'absolute',
           height: '100%',
           width: '100%',
-          borderRadius: 20,
+          borderRadius: 80,
           padding: 20,
         }}>
         {/* <View> */}
@@ -106,7 +111,7 @@ const Login = () => {
           <Text style={stylesSheet.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={loginHandler}>
+        <TouchableOpacity onPress={dismissHandler}>
           <Text>Dismiss</Text>
         </TouchableOpacity>
       </View>

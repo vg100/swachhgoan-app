@@ -77,7 +77,7 @@ const AddSupervisor = ({navigation, route}) => {
           alignItems: 'center',
           marginVertical: 20,
         }}>
-        <Text style={{marginRight: 10, fontSize: 15}}>Gender</Text>
+        <Text style={{marginRight: 10, fontSize: 16}}>Gender</Text>
         {['Male', 'Female'].map((item, index) => {
           return (
             <View
@@ -110,7 +110,7 @@ const AddSupervisor = ({navigation, route}) => {
                   />
                 ) : null}
               </TouchableOpacity>
-              <Text style={{marginLeft: 5, fontSize: 15}}>{item}</Text>
+              <Text style={{marginLeft: 5, fontSize: 16}}>{item}</Text>
             </View>
           );
         })}
