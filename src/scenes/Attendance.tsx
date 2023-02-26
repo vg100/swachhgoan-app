@@ -2,16 +2,38 @@ import axios from "axios"
 import React from "react"
 import { Text, TextInput, TouchableOpacity, View, FlatList, Image } from "react-native"
 import { useDispatch } from "react-redux"
+import { AttendanceRepositry } from "../services/AttendanceRepositry"
 import { AuthRepositry } from "../services/AuthRepositry"
 import { FloatingTitleTextInputField } from './floating_title_text_input_field';
 
 
 const Attendance = ({ navigation, route }) => {
-    const [selectedRole, setSelectedRole] = React.useState(0);
+    const [selectedGender, setSelectedGender] = React.useState(0);
+    const {supervisor}=route.params.item
+const dispatch=useDispatch()
+const [formValues, setFormValues] = React.useState({
+   name:'',
+   age:"",
+   phone_no:"",
+   gender:""
+  });
+
+  function _updateMasterState(attrName: any, value: any) {
+    console.log(attrName);
+    setFormValues(preval => {
+      return {
+        ...preval,
+        [attrName]: value,
+      };
+    });
+    // setState({ [attrName]: value });
+  }
 
     const submitHandler = () => {
-
-        navigation.goBack()
+        dispatch(AttendanceRepositry.addAttendance("63f9eb12b9186d2627711b5d",{
+           ...formValues,
+           gender: selectedGender === 0 ? 'male' : 'female',
+        }))
     }
 
     return (
@@ -22,12 +44,16 @@ const Attendance = ({ navigation, route }) => {
 
             <FloatingTitleTextInputField
                 attrName='event'
-                title='Event Name'
-                disabled
+                title={supervisor}
+               
+                editable={false}
+               
             />
             <FloatingTitleTextInputField
                 attrName='supervisor'
-                title='Supervisor'
+                title={supervisor}
+                editable={false}
+           
             />
 
             <View style={{ marginTop: 20 }}></View>
@@ -35,10 +61,22 @@ const Attendance = ({ navigation, route }) => {
             <FloatingTitleTextInputField
                 attrName='name'
                 title='Name'
+                value={formValues.name}
+                updateMasterState={_updateMasterState}
             />
             <FloatingTitleTextInputField
                 attrName='age'
                 title='Age'
+                value={formValues.age}
+                updateMasterState={_updateMasterState}
+            />
+
+<FloatingTitleTextInputField
+                attrName='phone_no'
+                title='Contact Number'
+                keyboardType="numeric"
+                value={formValues.phone_no}
+                updateMasterState={_updateMasterState}
             />
             <View
                 style={{
@@ -57,7 +95,7 @@ const Attendance = ({ navigation, route }) => {
 
                             }}>
                             <TouchableOpacity
-                                onPress={() => setSelectedRole(index)}
+                                onPress={() => setSelectedGender(index)}
                                 style={[
                                     {
                                         height: 22,
@@ -70,7 +108,7 @@ const Attendance = ({ navigation, route }) => {
 
                                     },
                                 ]}>
-                                {index === selectedRole ? (
+                                {index === selectedGender ? (
                                     <View
                                         style={{
                                             height: 12,
@@ -87,11 +125,7 @@ const Attendance = ({ navigation, route }) => {
                 })}
             </View>
             {/* /> */}
-            <FloatingTitleTextInputField
-                attrName='contact'
-                title='Contact Number'
-                keyboardType="numeric"
-            />
+         
 
             <TouchableOpacity
                 onPress={submitHandler}

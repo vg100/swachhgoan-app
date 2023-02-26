@@ -16,6 +16,7 @@ export class FloatingTitleTextInputField extends Component {
     textInputStyles: object,
     secureTextEntry:Boolean,
     otherTextInputProps: object,
+    editable:Boolean,
   }
 
   
@@ -28,6 +29,7 @@ export class FloatingTitleTextInputField extends Component {
     textInputStyles: {}, 
     secureTextEntry:false,
     otherTextInputAttributes: {},
+    editable:true
   }
 
   constructor(props) {
@@ -92,6 +94,7 @@ export class FloatingTitleTextInputField extends Component {
           {this.props.title}
         </Animated.Text>
         <TextInput
+      editable={this.props.editable}
           value = {this.props.value}
           style = {[Styles.textInput]}
           underlineColorAndroid = 'transparent'

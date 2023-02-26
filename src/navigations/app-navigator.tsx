@@ -13,6 +13,7 @@ import Supervisor from '../scenes/Supervisor';
 
 import AddSupervisor from '../scenes/AddSupervisor';
 import Modal from '../scenes/modal';
+import AttendanceList from '../scenes/AttendanceList';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +43,13 @@ export function UserStackScreen() {
       <Stack.Screen
         name="attendance"
         component={Attendance}
+        options={({route}: any) => ({
+          title: route.params.title,
+        })}
+      />
+       <Stack.Screen
+        name="attendancelist"
+        component={AttendanceList}
         options={({route}: any) => ({
           title: route.params.title,
         })}
@@ -132,6 +140,7 @@ export function MyTabs() {
               case 'attendance':
               case 'addEvent':
               case 'eventDetail':
+                case 'attendancelist':
                 return {display: 'none'};
               default:
                 return;
@@ -140,7 +149,7 @@ export function MyTabs() {
         })}
       />
       <Tab.Screen
-        name="Attendance"
+        name="Create Event"
         component={NewEvent}
         options={{
           tabBarLabel: 'Create Event',

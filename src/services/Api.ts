@@ -52,5 +52,14 @@ export class Api {
     });
   }
 
+  static async addAttendance(id:any,data: any) {
+    const token = await Http.getToken();
+    return Http.post(`/attendance/add/${id}`,data,{
+      headers: {
+        authorization: token,
+      },
+    });
+  }
+
 
 }

@@ -54,16 +54,18 @@ const NewEvent = ({navigation, route}: any) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const [formValues, setFormValues] = React.useState({
-    supervisor: '',
-    training_type: '',
-    location: '',
-    no_participant: '',
-    male: '',
-    female: '',
-    startDate: '',
-    endDate: '',
-    report: '',
+    supervisor: '' || route?.params?.item?.supervisor,
+    training_type: '' || route?.params?.item?.type_of_training,
+    location: '' || route?.params?.item?.location,
+    no_participant: '' || route?.params?.item?.no_of_participant?.toString(),
+    male: '' || route?.params?.item?.no_of_males,
+    female: '' || route?.params?.item?.no_of_females,
+    startDate: '' || route?.params?.item?.startDate,
+    endDate: '' || route?.params?.item?.endDate,
+    report: '' || route?.params?.item?.report,
   });
+
+  
   function _updateMasterState(attrName: any, value: any) {
     console.log(attrName);
     setFormValues(preval => {
@@ -83,7 +85,7 @@ const NewEvent = ({navigation, route}: any) => {
         endDate: currentEndDate.toISOString(),
       }),
     );
-    navigation.goBack();
+    navigation.navigate("Category")
   };
 
   const imageHandler = async () => {

@@ -28,7 +28,7 @@ const UserDashboard = ({navigation, route}) => {
     {
       image: require('../assets/images/attendance.png'),
       title: 'Attendance',
-      routeName: 'attendance',
+      routeName: 'attendancelist',
     },
     {
       image: require('../assets/images/upcoming_event.png'),

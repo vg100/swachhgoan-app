@@ -37,34 +37,33 @@ const Event = ({navigation, route}: any) => {
     } else {
       dispatch(EventRepositry.getUpcomingEvent());
     }
-  }, [route.params.title]);
+  }, [route.params.title,isRefresh]);
 
-  console.log(eventItems);
 
-  React.useLayoutEffect(() => {
-    if (!isAdmin) {
-      if (route.params.title === 'Ongoing Event') {
-        navigation.setOptions({
-          headerRight: () => (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('addEvent', {title: 'Add Event'})
-                }
-                style={{
-                  backgroundColor: 'indianred',
-                  paddingVertical: 5,
-                  paddingHorizontal: 10,
-                  borderRadius: 5,
-                }}>
-                <Text style={{color: 'white'}}>Add Event</Text>
-              </TouchableOpacity>
-            </View>
-          ),
-        });
-      }
-    }
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   if (!isAdmin) {
+  //     if (route.params.title === 'Ongoing Event') {
+  //       navigation.setOptions({
+  //         headerRight: () => (
+  //           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+  //             <TouchableOpacity
+  //               onPress={() =>
+  //                 navigation.navigate('addEvent', {title: 'Add Event'})
+  //               }
+  //               style={{
+  //                 backgroundColor: 'indianred',
+  //                 paddingVertical: 5,
+  //                 paddingHorizontal: 10,
+  //                 borderRadius: 5,
+  //               }}>
+  //               <Text style={{color: 'white'}}>Add Event</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         ),
+  //       });
+  //     }
+  //   }
+  // }, [navigation]);
 
   const handleClick = async () => {
     try {
@@ -117,7 +116,7 @@ const Event = ({navigation, route}: any) => {
         flex: 1,
       }}>
       <FlatList
-        data={filtedData}
+        data={[...filtedData]}
         renderItem={({item}) => {
           console.log({
             uri: `${getEnvVariable()?.base_api_url}/${item.files[0]?.replace(
@@ -126,7 +125,7 @@ const Event = ({navigation, route}: any) => {
             )}`,
           });
           return (
-            <EventCollapsible item={item}/>
+            <EventCollapsible item={item} navigation={navigation}/>
 
    
           );
