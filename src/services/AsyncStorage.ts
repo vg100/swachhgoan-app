@@ -7,13 +7,15 @@ export class AsyncStorageService {
   }
   static async getUser() {
     try {
-      const response:any = await AsyncStorage.getItem(AsyncStorageService.USER);
+      const response: any = await AsyncStorage.getItem(
+        AsyncStorageService.USER,
+      );
       return JSON.parse(response);
     } catch (e) {
-      console.log(e,'error')
+      console.log(e, 'error');
       return Promise.reject(e);
     }
-  } 
+  }
   static clearUser() {
     return AsyncStorage.removeItem(AsyncStorageService.USER);
   }

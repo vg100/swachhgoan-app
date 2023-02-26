@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,8 +8,6 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-
-
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -121,120 +119,146 @@ const Collapsiblee = ({
     if (controlled && show != expanded) setShow(expanded);
   });
 
-
-  const [showpassword,setShowpassword]=React.useState(false)
+  const [showpassword, setShowpassword] = React.useState(false);
   return (
     <View
-      style={[styles.container, style, touchableWrapperStyle,{overflow:'hidden'}]}
+      style={[
+        styles.container,
+        style,
+        touchableWrapperStyle,
+        {overflow: 'hidden'},
+      ]}
       activeOpacity={activeOpacityFeedback}
       {...touchableWrapperProps}>
-      <TouchableOpacity style={{padding:10}} activeOpacity={0.6} onPress={handleToggleShow}>
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-<View>
-        <Text
+      <TouchableOpacity
+        style={{padding: 10}}
+        activeOpacity={0.6}
+        onPress={handleToggleShow}>
+        <View
           style={{
-            color: `#545454`,
-            fontWeight: 'bold',
-            lineHeight: 21,
-            fontSize:20
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}>
-          {item?.name}
-        </Text>
-
-        <Text
-          style={{
-            color: `#545454`,
-            fontWeight: 'bold',
-            lineHeight: 21,
-
-          }}>
-         {item?.email}
-        </Text>
-
-</View>
-<View>
-        {
-          showpassword ? (
+          <View>
             <Text
-            style={{
-              color: `#545454`,
-              fontWeight: 'bold',
-              lineHeight: 21,
-  
-            }}>
-  
-            {item?.passwordView}
-          </Text>
-          ):(
-<TouchableOpacity style={{backgroundColor:'yellow',paddingHorizontal:5,borderRadius:5}} onPress={()=>setShowpassword((pre)=>!pre)}>
-        <Text
-          style={{
-            color: `#545454`,
-            fontSize:15,
-            fontWeight:'bold'
-          }}>
+              style={{
+                color: `#545454`,
+                fontWeight: 'bold',
+                lineHeight: 21,
+                fontSize: 20,
+              }}>
+              {item?.name}
+            </Text>
 
-          show password
-        </Text>
-        </TouchableOpacity>
-          )
-        }
-</View>
-</View>
+            <Text
+              style={{
+                color: `#545454`,
+                fontWeight: 'bold',
+                lineHeight: 21,
+              }}>
+              {item?.email}
+            </Text>
+          </View>
+          <View>
+            {showpassword ? (
+              <Text
+                style={{
+                  color: `#545454`,
+                  fontWeight: 'bold',
+                  lineHeight: 21,
+                }}>
+                {item?.passwordView}
+              </Text>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  backgroundColor: 'yellow',
+                  paddingHorizontal: 5,
+                  borderRadius: 5,
+                }}
+                onPress={() => setShowpassword(pre => !pre)}>
+                <Text
+                  style={{
+                    color: `#545454`,
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                  }}>
+                  show password
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-           
           }}>
-            <View style={{ backgroundColor: item?.role==='admin'?'indianred':'white',paddingVertical:0,paddingHorizontal:5,borderRadius:2}}>
-            <Text
+          <View
             style={{
-          
-              fontWeight: 'bold',
-              lineHeight: 21,
-              color:item?.role==='admin'?'white':'black'
+              backgroundColor: item?.role === 'admin' ? 'indianred' : 'white',
+              paddingVertical: 0,
+              paddingHorizontal: 5,
+              borderRadius: 2,
             }}>
-          {item?.role}
-          </Text>
-            </View>
-        
+            <Text
+              style={{
+                fontWeight: 'bold',
+                lineHeight: 21,
+                color: item?.role === 'admin' ? 'white' : 'black',
+              }}>
+              {item?.role}
+            </Text>
+          </View>
 
           {noArrow ? null : (
-            <Animated.View style={{ transform: [{ rotate: rotateAnimDeg }] }}>
+            <Animated.View style={{transform: [{rotate: rotateAnimDeg}]}}>
               <Icon name="chevron-down" size={22} color="#3766E8" />
             </Animated.View>
           )}
         </View>
-
       </TouchableOpacity>
       {mounted ? (
-        <View style={{ width: '100%', ...collapsibleContainerStyle }}>
+        <View style={{width: '100%', ...collapsibleContainerStyle}}>
           <Collapsible
             onAnimationEnd={handleAnimationEnd}
             collapsed={!show}
-            {...{ duration, ...collapsibleProps }}>
-
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TouchableOpacity style={{ paddingVertical:10,backgroundColor: 'blue', flexGrow: 1, alignItems: 'center' }}>
-                <Text style={{ color: 'white' }}>
-                  Edit
-                </Text>
+            {...{duration, ...collapsibleProps}}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 10,
+                  backgroundColor: 'blue',
+                  flexGrow: 1,
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'white'}}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{ paddingVertical:10,backgroundColor: 'red', flexGrow: 1, alignItems: 'center' }}>
-                <Text style={{ color: 'white' }}>
-                  Remove
-                </Text>
-              </TouchableOpacity >
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 10,
+                  backgroundColor: 'red',
+                  flexGrow: 1,
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'white'}}>Remove</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={()=>navigation.navigate('userstack')} style={{ paddingVertical:10,backgroundColor: '#00A300', alignItems: 'center' }}>
-              <Text style={{ color: 'white' }}>View Events</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('userstack')}
+              style={{
+                paddingVertical: 10,
+                backgroundColor: '#00A300',
+                alignItems: 'center',
+              }}>
+              <Text style={{color: 'white'}}>View Events</Text>
             </TouchableOpacity>
           </Collapsible>
         </View>
       ) : null}
-
     </View>
   );
 };
@@ -250,7 +274,6 @@ const styles = StyleSheet.create({
     // padding: 5,
 
     borderRadius: 10,
-
 
     //  shadowOffset: {width: 1, height: 0},
     //                 shadowOpacity: 0.4,
