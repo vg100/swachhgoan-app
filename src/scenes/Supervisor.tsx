@@ -13,13 +13,20 @@ import {AuthRepositry} from '../services/AuthRepositry';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Collapsiblee from '../components/collapse';
 
-const Supervisor = ({navigation, route}) => {
+const Supervisor = ({navigation, route}:any) => {
   const dispatch: any = useDispatch();
   const {users, isRefresh} = useSelector((state: any) => state.allUsers);
 
   React.useEffect(() => {
     dispatch(AuthRepositry.getAllUser());
   }, [isRefresh]);
+
+
+
+  const deleteHandler=(id:any)=>{
+    dispatch(AuthRepositry.deleteUser(id))
+  }
+
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -56,7 +63,9 @@ const Supervisor = ({navigation, route}) => {
         <FlatList
           data={users}
           renderItem={({item, index}) => {
-            return <Collapsiblee item={item} navigation={navigation} />;
+            return <Collapsiblee item={item} navigation={navigation} 
+            deleteHandler={(id:any)=>deleteHandler(id)}
+            />;
           }}
         />
       }

@@ -13,6 +13,8 @@ export enum AuthActionTypes {
   ALL_USERS_FAIL = 'ALL USERS FAIL',
 
   IS_REFRESH = 'IS REFRESH',
+
+  DELETE_USER = 'delete user',
 }
 export class AuthRepositry {
   static login(data: any) {
@@ -79,6 +81,18 @@ export class AuthRepositry {
         dispatch({type: AuthActionTypes.ALL_USERS_SUCCESS, payload: user});
       } catch (e) {
         dispatch({type: AuthActionTypes.ALL_USERS_FAIL});
+        return Promise.reject(e);
+      }
+    };
+  }
+  static deleteUser(id:any) {
+    return async (dispatch: any) => {
+      try {
+        const user = await Api.deleteUser(id);
+        console.log(user)
+        // dispatch({type: AuthActionTypes.DELETE_USER, payload: user});
+        dispatch({type: AuthActionTypes.IS_REFRESH});
+      } catch (e) {
         return Promise.reject(e);
       }
     };

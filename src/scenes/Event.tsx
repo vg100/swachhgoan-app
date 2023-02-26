@@ -19,6 +19,7 @@ import {Utils} from '../utils/utils';
 import {format} from 'date-fns';
 import Moment from 'moment';
 import {getEnvVariable} from '../environment';
+import EventCollapsible from '../components/EventCollaps';
 const Event = ({navigation, route}: any) => {
   const dispatch: any = useDispatch();
   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
@@ -125,67 +126,9 @@ const Event = ({navigation, route}: any) => {
             )}`,
           });
           return (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('eventDetail', {
-                  title: 'Event Detail',
-                  data: item,
-                })
-              }
-              style={{
-                alignItems: 'center',
-                elevation: 1,
-                borderRadius: 10,
-                marginVertical: 10,
-                flexDirection: 'row',
-                backgroundColor: 'white',
-                marginHorizontal: 15,
-                justifyContent: 'space-between',
-              }}>
-              <Image
-                style={{
-                  height: 100,
-                  width: '40%',
-                  borderRightWidth: 10,
-                  borderColor: 'black',
-                }}
-                source={{
-                  uri: `${
-                    getEnvVariable()?.base_api_url
-                  }/${item.files[0]?.replace(/\\/, '/')}`,
-                }}
-              />
-              <View style={{paddingHorizontal: 10}}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    textTransform: 'capitalize',
-                    fontFamily: 'Cabin-Bold',
-                    color: 'black',
-                  }}>
-                  {item.supervisor.toUpperCase()}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    textTransform: 'capitalize',
-                    fontFamily: 'Cabin-Italic',
-                    color: 'gray',
-                  }}>
-                  {Moment(item?.startDate).format('DD-MMM-YYYY')} -{' '}
-                  {Moment(item?.endDate).format('DD-MMM-YYYY')}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    textTransform: 'capitalize',
-                    fontFamily: 'Cabin-Italic',
-                    color: 'gray',
-                  }}>
-                  {item?.location}
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <EventCollapsible item={item}/>
+
+   
           );
         }}
       />
