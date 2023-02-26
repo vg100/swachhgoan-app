@@ -14,31 +14,41 @@ import Moment from 'moment';
 import { getEnvVariable } from "../environment"
 const Event = ({ navigation, route }: any) => {
     const dispatch: any = useDispatch()
-    const { pastEvent, upcomingEvent, eventItems, loading, isRefresh } = useSelector((state: any) => state.event)
-    // React.useEffect(() => {
-    //     if (route.params.title === "Past Event") {
-    //         dispatch(EventRepositry.getPastEvent())
-    //     } else {
-    //         dispatch(EventRepositry.getUpcomingEvent())
-    //     }
-    // }, [route.params.title])
+    const {filtedData, eventItems, loading, isRefresh, } = useSelector((state: any) => state.event)
+
+ 
 
     React.useEffect(() => {
-        dispatch(EventRepositry.getEventList())
-    }, [isRefresh])
+        if (route.params.title === "Past Event") {
+            dispatch(EventRepositry.getPastEvent())
+        } else if (route.params.title === "Ongoing Event") {
+
+            dispatch(EventRepositry.getOngoingEvent())
+        }else { 
+            dispatch(EventRepositry.getUpcomingEvent())
+        }
+    }, [route.params.title])
+
+    console.log(eventItems);
+
+
+
 
     React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('addEvent', { title: "Add Event", })}
-                        style={{ backgroundColor: 'indianred', paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
-                        <Text style={{ color: 'white' }}>Add Event</Text>
-                    </TouchableOpacity >
-                </View>
-            )
-        });
+        if (route.params.title === "Ongoing Event") { 
+            navigation.setOptions({
+                headerRight: () => (
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('addEvent', { title: "Add Event", })}
+                            style={{ backgroundColor: 'indianred', paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
+                            <Text style={{ color: 'white' }}>Add Event</Text>
+                        </TouchableOpacity >
+                    </View>
+                )
+            });
+              }
+      
 
     }, [navigation])
 
@@ -92,19 +102,19 @@ const Event = ({ navigation, route }: any) => {
 
 
             <FlatList
-                data={eventItems}
+                data={filtedData}
                 renderItem={({ item }) => {
 console.log({uri: `${getEnvVariable()?.base_api_url}/${item.files[0]?.replace(/\\/,'/')}`})
                     return (
                         <TouchableOpacity
                             onPress={() => navigation.navigate('eventDetail', { title: "Event Detail", data: item })}
                             style={{ alignItems: 'center', elevation: 1, borderRadius: 10, marginVertical: 10, flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 15, justifyContent: 'space-between' }}>
-                            <Image style={{ height: 100, width: "60%", borderRightWidth: 10, borderColor: 'black' }}
+                            <Image style={{ height: 100, width: "40%", borderRightWidth: 10, borderColor: 'black' }}
                                 source={{ uri: `${getEnvVariable()?.base_api_url}/${item.files[0]?.replace(/\\/,'/')}` }}
                             />
                             <View style={{ paddingHorizontal: 10 }}>
-                                <Text style={{ fontSize: 20, textTransform: 'capitalize', fontFamily: 'Cabin-Bold', color: 'black' }}>{item.location.toUpperCase()}</Text>
-                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>{Moment(item?.startDate).format('d MMM YYYY')} - {Moment(item?.endDate).format('d MMM YYYY')}</Text>
+                                <Text style={{ fontSize: 20, textTransform: 'capitalize', fontFamily: 'Cabin-Bold', color: 'black' }}>{item.supervisor.toUpperCase()}</Text>
+                                <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>{Moment(item?.startDate).format('DD-MMM-YYYY')} - {Moment(item?.endDate).format('DD-MMM-YYYY')}</Text>
                                 <Text style={{ fontSize: 15, textTransform: 'capitalize', fontFamily: 'Cabin-Italic', color: 'gray' }}>{item?.location}</Text>
                             </View>
                         </TouchableOpacity>

@@ -1,7 +1,7 @@
 import axios from "axios"
 import React,{useState} from "react"
 import { Text, TextInput, TouchableOpacity, View, FlatList, Image, ScrollView, StyleSheet, Platform } from "react-native"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AuthRepositry } from "../services/AuthRepositry"
 import styles from "./../styles/style"
 import { FloatingTitleTextInputField } from './floating_title_text_input_field';
@@ -24,6 +24,7 @@ const start = subWeeks(today, 1);
 const end = addWeeks(today, 2);
 
 const NewEvent = ({ navigation, route }: any) => {
+    const {filtedData, eventItems, loading, isRefresh, } = useSelector((state: any) => state.event)
     const dispatch: any = useDispatch()
     const [images, setImages] = React.useState([]);
     const [video, setVideo] = React.useState([]);

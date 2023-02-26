@@ -14,6 +14,10 @@ const UserDashboard = ({ navigation, route }) => {
         dispatch(AuthRepositry.logout())
     }
 
+    React.useEffect(() => {
+        dispatch(EventRepositry.getEventList())
+    }, [isRefresh])
+
     const data = [
         {   image: require('../assets/images/past_event.png'),
             title: "Past Event",
