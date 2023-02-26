@@ -3,7 +3,7 @@ import {getEnvVariable} from '../environment';
 import {ToastAndroid} from 'react-native';
 import {AsyncStorageService} from './AsyncStorage';
 export class Http {
-   static getToken = async () => {
+  static getToken = async () => {
     const user = await AsyncStorageService.getUser();
     return user ? user.token : null;
   };
@@ -13,10 +13,10 @@ export class Http {
       'Content-Type': 'application/json',
     },
   });
-  static async get(url:any, config?: AxiosRequestConfig) {
+  static async get(url: any, config?: AxiosRequestConfig) {
     try {
       const token = await Http.getToken();
- 
+
       const response = await Http.axios.get(url, config);
       if (response) {
         return response.data;
@@ -26,8 +26,7 @@ export class Http {
       return Promise.reject(e);
     }
   }
-  static async post(url:any, body?: object, config?: AxiosRequestConfig) {
-
+  static async post(url: any, body?: object, config?: AxiosRequestConfig) {
     try {
       const token = await Http.getToken();
       const response = await Http.axios.post(url, body, config);
@@ -39,7 +38,7 @@ export class Http {
       return Promise.reject(e);
     }
   }
-  static async patch(url:any, body?: object, config?: AxiosRequestConfig) {
+  static async patch(url: any, body?: object, config?: AxiosRequestConfig) {
     try {
       const token = await Http.getToken();
 
@@ -52,7 +51,7 @@ export class Http {
       return Promise.reject(e);
     }
   }
-  static async delete(url:any, config?: AxiosRequestConfig) {
+  static async delete(url: any, config?: AxiosRequestConfig) {
     try {
       const token = await Http.getToken();
 
@@ -65,7 +64,7 @@ export class Http {
       return Promise.reject(e);
     }
   }
-  private static handleErrors(error:any) {
+  private static handleErrors(error: any) {
     if (error.response) {
       const message = error.response.data.message;
       const errorMessage = message

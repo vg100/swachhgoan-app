@@ -1,9 +1,9 @@
-import { Text, View } from "react-native/types"
+import {Text, View} from 'react-native/types';
 
-export const Box=()=>{
-return(
+export const Box = () => {
+  return (
     <View>
-<Text>hello</Text>
+      <Text>hello</Text>
     </View>
-)
-}
+  );
+};

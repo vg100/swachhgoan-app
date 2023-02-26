@@ -4,33 +4,28 @@ import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 const Modals = () => {
   const [modalVisible, setModalVisible] = useState(true);
   return (
-      <Modal
-        animationType="slide"
-        style={{height:100,width:100}}
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-     
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
-  
-      </Modal>
-
-
+    <Modal
+      animationType="slide"
+      style={{height: 100, width: 100}}
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+        setModalVisible(!modalVisible);
+      }}>
+      <View style={styles.modalView}>
+        <Text style={styles.modalText}>Hello World!</Text>
+        <Pressable
+          style={[styles.button, styles.buttonClose]}
+          onPress={() => setModalVisible(!modalVisible)}>
+          <Text style={styles.textStyle}>Hide Modal</Text>
+        </Pressable>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
- 
   modalView: {
     margin: 20,
     backgroundColor: 'white',
