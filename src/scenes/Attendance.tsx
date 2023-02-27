@@ -1,7 +1,7 @@
 import axios from "axios"
 import React from "react"
 import { Text, TextInput, TouchableOpacity, View, FlatList, Image, StyleSheet } from "react-native"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AttendanceRepositry } from "../services/AttendanceRepositry"
 import { AuthRepositry } from "../services/AuthRepositry"
 import { FloatingTitleTextInputField } from './floating_title_text_input_field';
@@ -9,8 +9,10 @@ import DatePicker from 'react-native-datepicker';
 
 const Attendance = ({ navigation, route }) => {
     const [selectedGender, setSelectedGender] = React.useState(0);
-      const [date, setDate] = useState('09-10-2021');
-    const {supervisor}=route.params.item
+    const {user, loggedIn, loggingIn, isAdmin} = useSelector(
+        (state: any) => state.userLogin,
+      );
+    const {eventname,_id}=route.params.item
 const dispatch=useDispatch()
 const [formValues, setFormValues] = React.useState({
    name:'',
@@ -20,7 +22,7 @@ const [formValues, setFormValues] = React.useState({
   });
 
   function _updateMasterState(attrName: any, value: any) {
-    console.log(attrName);
+ 
     setFormValues(preval => {
       return {
         ...preval,
@@ -31,7 +33,7 @@ const [formValues, setFormValues] = React.useState({
   }
 
     const submitHandler = () => {
-        dispatch(AttendanceRepositry.addAttendance("63f9eb12b9186d2627711b5d",{
+        dispatch(AttendanceRepositry.addAttendance(_id,{
            ...formValues,
            gender: selectedGender === 0 ? 'male' : 'female',
         }))
@@ -45,56 +47,22 @@ const [formValues, setFormValues] = React.useState({
 
             <FloatingTitleTextInputField
                 attrName='event'
-                title={supervisor}
-               
+                title={eventname}
+                disableColor={{   backgroundColor: 'lightgray'}}
                 editable={false}
                
             />
             <FloatingTitleTextInputField
                 attrName='supervisor'
-                title={supervisor}
+                title={user.name}
+                disableColor={{   backgroundColor: 'lightgray'}}
                 editable={false}
            
             />
 
             <View style={{ marginTop: 20 }}></View>
 
-            
-            <DatePicker
-          style={styles.datePickerStyle}
-          date={date}
-          mode="date"
-          placeholder="select date"
-          format="DD/MM/YYYY"
-          minDate="01-01-1900"
-          maxDate="01-01-2000"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              right: -5,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              borderColor : "gray",
-              alignItems: "flex-start",
-              borderWidth: 0,
-              borderBottomWidth: 1,
-            },
-            placeholderText: {
-              fontSize: 17,
-              color: "gray"
-            },
-            dateText: {
-              fontSize: 17,
-            }
-          }}
-          onDateChange={(date: any) => {
-            setDate(date);
-          }}
-        />
+
             <FloatingTitleTextInputField
                 attrName='name'
                 title='Name'

@@ -17,10 +17,11 @@ const AdminDashboard = ({navigation, route}) => {
       icon: 'supervisor-account',
       route: 'supervisors',
     },
-    // {
-    //   title: 'Events',
-    //   icon: 'event',
-    // },
+    {
+      title: 'Events',
+      icon: 'event',
+    route:"userstack",
+    },
     // {
     //   title: 'Attendence',
     //   icon: 'supervisor-account',

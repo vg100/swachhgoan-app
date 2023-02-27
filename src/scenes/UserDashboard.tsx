@@ -65,7 +65,7 @@ const UserDashboard = ({navigation, route}) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{marginRight: 10}}>{user?.name}</Text>
+          <Text style={{marginRight: 10,textTransform:'capitalize'}}>{user?.name}</Text>
           <TouchableOpacity
             onPress={logoutHandler}
             style={{

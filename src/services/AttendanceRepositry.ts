@@ -19,7 +19,7 @@ export class AttendanceRepositry {
             //     type: AttendanceActionTypes.ADD_ATTENDANCE,
             //     payload: user,
             //   });
-            Alert.alert("marked attendance successfullly")
+            Alert.alert("Marked Attendance Successfullly")
             dispatch({type: EventActionTypes.IS_REFRESH});
             } catch (error) {
               return Promise.reject(error);

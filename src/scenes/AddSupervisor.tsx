@@ -22,7 +22,7 @@ const AddSupervisor = ({navigation, route}) => {
     name: '',
     email: '',
     password: '',
-    contact: ''
+    phone_no: ''
   });
   function _updateMasterState(attrName: any, value: any) {
     console.log(attrName);
@@ -73,9 +73,9 @@ const AddSupervisor = ({navigation, route}) => {
       />
 
 <FloatingTitleTextInputField
-        attrName="contact"
-        title="Contact"
-        value={formValues.contact}
+        attrName="phone_no"
+        title="Phone No"
+        value={formValues.phone_no}
         updateMasterState={_updateMasterState}
       />
 

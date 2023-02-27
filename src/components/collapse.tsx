@@ -148,6 +148,7 @@ const Collapsiblee = ({
                 fontWeight: 'bold',
                 lineHeight: 21,
                 fontSize: 20,
+            textTransform: 'capitalize',
               }}>
               {item?.name}
             </Text>
@@ -184,8 +185,9 @@ const Collapsiblee = ({
                     color: `#545454`,
                     fontSize: 15,
                     fontWeight: 'bold',
+                    textTransform: 'capitalize',
                   }}>
-                  show password
+                  view password
                 </Text>
               </TouchableOpacity>
             )}
@@ -199,16 +201,17 @@ const Collapsiblee = ({
           }}>
           <View
             style={{
-              backgroundColor: item?.role === 'admin' ? 'indianred' : 'white',
+              backgroundColor: item?.role === 'admin' ? 'indianred' : 'green',
               paddingVertical: 0,
               paddingHorizontal: 5,
-              borderRadius: 2,
+              borderRadius: 3,
             }}>
             <Text
               style={{
                 fontWeight: 'bold',
                 lineHeight: 21,
-                color: item?.role === 'admin' ? 'white' : 'black',
+                color: item?.role === 'admin' ? 'white' : 'white',
+                textTransform:'capitalize'
               }}>
               {item?.role}
             </Text>

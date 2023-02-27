@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';
-import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const Profile = ({navigation, route}) => {
   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
@@ -61,12 +63,12 @@ const Profile = ({navigation, route}) => {
           position: 'relative',
           paddingTop: 40,
         }}>
-        <Text style={{fontSize: 20, fontWeight: '800'}}>{user?.name}</Text>
+        <Text style={{fontSize: 20, fontWeight: '800',textTransform:'capitalize'}}>{user?.name}</Text>
         <Text style={{fontSize: 15, marginVertical: 5}}>
-        <Icon name="mail" size={15} color="#3766E8" /> {user?.email}
+        <Ionicons name="mail" size={15} color="#3766E8" /> {user?.email}
         </Text>
              
-        <Text style={{fontSize: 15}}> <Icon name="mobile" size={15} color="#3766E8" /> +91-12345678</Text>
+        <Text style={{fontSize: 15}}> <FontAwesome name="phone" size={15} color="#3766E8" /> +91 {user?.phone_no}</Text>
       </View>
 
       <View
@@ -76,10 +78,15 @@ const Profile = ({navigation, route}) => {
           width: 100,
           backgroundColor: 'white',
           alignSelf: 'center',
+          justifyContent:'center',
+          alignItems:'center',
           bottom: 260,
           borderWidth: 1,
         }}
-      />
+       
+      >
+         <FontAwesome name="user" size={70} color="black" />
+      </View>
     </View>
   );
 };

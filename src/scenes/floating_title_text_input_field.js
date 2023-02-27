@@ -87,9 +87,9 @@ export class FloatingTitleTextInputField extends Component {
 
   render() {
     return (
-      <View style = {Styles.container}>
+      <View style = {[Styles.container,{...this.props.disableColor}]}>
         <Animated.Text
-          style = {[Styles.titleStyles, this._returnAnimatedTitleStyles()]}
+          style = {[Styles.titleStyles, this._returnAnimatedTitleStyles(),{textTransform:'capitalize'}]}
         >
           {this.props.title}
         </Animated.Text>

@@ -54,7 +54,7 @@ const NewEvent = ({navigation, route}: any) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const [formValues, setFormValues] = React.useState({
-    supervisor: '' || route?.params?.item?.supervisor,
+    eventname: '' || route?.params?.item?.eventname,
     training_type: '' || route?.params?.item?.type_of_training,
     location: '' || route?.params?.item?.location,
     no_participant: '' || route?.params?.item?.no_of_participant?.toString(),
@@ -208,9 +208,9 @@ const NewEvent = ({navigation, route}: any) => {
         <View style={{paddingHorizontal: 5, justifyContent: 'center'}}>
           <ScrollView>
             <FloatingTitleTextInputField
-              attrName="supervisor"
-              title="Supervisor"
-              value={formValues.supervisor}
+              attrName="eventname"
+              title="Event Name"
+              value={formValues.eventname}
               updateMasterState={_updateMasterState}
             />
 

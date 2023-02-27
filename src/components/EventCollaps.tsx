@@ -169,7 +169,7 @@ const EventCollapsible = ({
               fontFamily: 'Cabin-Bold',
               color: 'black',
             }}>
-            {item.supervisor.toUpperCase()}
+            {item.eventname.toUpperCase()}
           </Text>
           <Text
             style={{
@@ -281,7 +281,7 @@ const EventCollapsible = ({
 
             <View style={{ marginVertical: 20, paddingHorizontal: 5 }}>
               <Text style={{ fontWeight: 'bold' }}>Report</Text>
-              <Text>hsbhsfhsvghfvsgdvsgvhsbhsfhsvghfvsgdvsgvhsbhsfhsvghfvsgdvsgvhsbhsfhsvghfvsgdvsgvhsbhsfhsvghfvsgdvsgv</Text>
+              <Text>{item.report}</Text>
             </View>
 
             <View
