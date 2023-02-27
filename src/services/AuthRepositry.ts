@@ -23,17 +23,19 @@ export class AuthRepositry {
         dispatch({type: AuthActionTypes.LOGIN_REQUEST});
         const user = await Api.login(data);
         if (user?.user?.role === 'admin') {
+
+          await AsyncStorageService.setUser({...user, isAdmin: true});
           dispatch({
             type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
             payload: {...user, isAdmin: true},
           });
-          await AsyncStorageService.setUser({...user, isAdmin: true});
         } else {
+
+          await AsyncStorageService.setUser({...user, isAdmin: false});
           dispatch({
             type: AuthActionTypes.LOGIN_REQUEST_SUCCESS,
             payload: {...user, isAdmin: false},
           });
-          await AsyncStorageService.setUser({...user, isAdmin: false});
         }
       } catch (e) {
         console.log(e);

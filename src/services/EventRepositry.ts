@@ -22,7 +22,7 @@ export class EventRepositry {
       dispatch({type: EventActionTypes.EVENT_REQUEST});
       try {
         const user = await Api.getAllEvents();
-        console.log(user, 'hh');
+        console.log(user, 'All event list');
 
         dispatch({
           type: EventActionTypes.EVENT_REQUEST_SUCCESS,

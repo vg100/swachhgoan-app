@@ -1,14 +1,15 @@
 import axios from "axios"
 import React from "react"
-import { Text, TextInput, TouchableOpacity, View, FlatList, Image } from "react-native"
+import { Text, TextInput, TouchableOpacity, View, FlatList, Image, StyleSheet } from "react-native"
 import { useDispatch } from "react-redux"
 import { AttendanceRepositry } from "../services/AttendanceRepositry"
 import { AuthRepositry } from "../services/AuthRepositry"
 import { FloatingTitleTextInputField } from './floating_title_text_input_field';
-
+import DatePicker from 'react-native-datepicker';
 
 const Attendance = ({ navigation, route }) => {
     const [selectedGender, setSelectedGender] = React.useState(0);
+      const [date, setDate] = useState('09-10-2021');
     const {supervisor}=route.params.item
 const dispatch=useDispatch()
 const [formValues, setFormValues] = React.useState({
@@ -58,6 +59,42 @@ const [formValues, setFormValues] = React.useState({
 
             <View style={{ marginTop: 20 }}></View>
 
+            
+            <DatePicker
+          style={styles.datePickerStyle}
+          date={date}
+          mode="date"
+          placeholder="select date"
+          format="DD/MM/YYYY"
+          minDate="01-01-1900"
+          maxDate="01-01-2000"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              right: -5,
+              top: 4,
+              marginLeft: 0,
+            },
+            dateInput: {
+              borderColor : "gray",
+              alignItems: "flex-start",
+              borderWidth: 0,
+              borderBottomWidth: 1,
+            },
+            placeholderText: {
+              fontSize: 17,
+              color: "gray"
+            },
+            dateText: {
+              fontSize: 17,
+            }
+          }}
+          onDateChange={(date: any) => {
+            setDate(date);
+          }}
+        />
             <FloatingTitleTextInputField
                 attrName='name'
                 title='Name'
@@ -138,4 +175,30 @@ const [formValues, setFormValues] = React.useState({
     )
 
 }
+
+
 export default Attendance
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor : '#A8E9CA'
+    },
+    title: {
+      textAlign: 'left',
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    datePickerStyle: {
+      width: 230,
+    },
+    text: {
+      textAlign: 'left',
+      width: 230,
+      fontSize: 16,
+      color : "#000"
+    }
+  });

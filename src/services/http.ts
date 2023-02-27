@@ -5,6 +5,7 @@ import {AsyncStorageService} from './AsyncStorage';
 export class Http {
   static getToken = async () => {
     const user = await AsyncStorageService.getUser();
+    console.log(user, "userrrr")
     return user ? user.token : null;
   };
   private static axios = _axios.create({

@@ -61,11 +61,11 @@ const AttendanceList = ({ navigation, route }) => {
 
       }}>
       <View style= {{padding: 10}}>
-        <SearchBar
+        {/* <SearchBar
           placeholder="Select Event"
           onPress={() => { }}
           onChangeText={(text) => console.log(text)}
-        />
+        /> */}
         {/* <TouchableOpacity
           onPress={showDatePicker}
           style={{

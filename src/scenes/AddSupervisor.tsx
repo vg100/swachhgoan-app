@@ -22,6 +22,7 @@ const AddSupervisor = ({navigation, route}) => {
     name: '',
     email: '',
     password: '',
+    contact: ''
   });
   function _updateMasterState(attrName: any, value: any) {
     console.log(attrName);
@@ -68,6 +69,13 @@ const AddSupervisor = ({navigation, route}) => {
         attrName="password"
         title="Password"
         value={formValues.password}
+        updateMasterState={_updateMasterState}
+      />
+
+<FloatingTitleTextInputField
+        attrName="contact"
+        title="Contact"
+        value={formValues.contact}
         updateMasterState={_updateMasterState}
       />
 
@@ -122,7 +130,7 @@ const AddSupervisor = ({navigation, route}) => {
           alignItems: 'center',
           marginVertical: 20,
         }}>
-        <Text style={{marginRight: 10, fontSize: 18}}>Role </Text>
+        <Text style={{marginRight: 10, fontSize: 16}}>Role </Text>
         {['Supervisor', 'Admin'].map((item, index) => {
           return (
             <View
@@ -155,7 +163,7 @@ const AddSupervisor = ({navigation, route}) => {
                   />
                 ) : null}
               </TouchableOpacity>
-              <Text style={{marginLeft: 5, fontSize: 20}}>{item}</Text>
+              <Text style={{marginLeft: 5, fontSize: 16}}>{item}</Text>
             </View>
           );
         })}

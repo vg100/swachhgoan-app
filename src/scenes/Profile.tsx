@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Profile = ({navigation, route}) => {
   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
@@ -50,18 +51,22 @@ const Profile = ({navigation, route}) => {
       <View
         style={{
           backgroundColor: 'white',
-          padding: 6,
+          padding: 15,
           marginHorizontal: 60,
           elevation: 2,
+          borderRadius: 20,
           height: 200,
+          justifyContent: 'center',
+          alignItems: 'center',
           position: 'relative',
           paddingTop: 40,
         }}>
-        <Text style={{fontSize: 20}}>Name:{user?.name}</Text>
-        <Text style={{fontSize: 20, marginVertical: 5}}>
-          Email:{user?.email}
+        <Text style={{fontSize: 20, fontWeight: '800'}}>{user?.name}</Text>
+        <Text style={{fontSize: 15, marginVertical: 5}}>
+        <Icon name="mail" size={15} color="#3766E8" /> {user?.email}
         </Text>
-        <Text style={{fontSize: 20}}>Phone No:+919555504027</Text>
+             
+        <Text style={{fontSize: 15}}> <Icon name="mobile" size={15} color="#3766E8" /> +91-12345678</Text>
       </View>
 
       <View
@@ -69,7 +74,7 @@ const Profile = ({navigation, route}) => {
           borderRadius: 100,
           height: 100,
           width: 100,
-          backgroundColor: 'indianred',
+          backgroundColor: 'white',
           alignSelf: 'center',
           bottom: 260,
           borderWidth: 1,
