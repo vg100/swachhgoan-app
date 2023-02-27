@@ -167,12 +167,12 @@ export function MyTabs() {
             <Image source={require('../assets/images/tab3.png')} />
           ),
         }}
-        listeners={({navigation}) => ({
-          tabPress: e => {
-            e.preventDefault();
-            navigation.navigate('modal');
-          },
-        })}
+        // listeners={({navigation}) => ({
+        //   tabPress: e => {
+        //     e.preventDefault();
+        //     navigation.navigate('modal');
+        //   },
+        // })}
       />
     </Tab.Navigator>
   );

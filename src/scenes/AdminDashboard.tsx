@@ -17,14 +17,14 @@ const AdminDashboard = ({navigation, route}) => {
       icon: 'supervisor-account',
       route: 'supervisors',
     },
-    {
-      title: 'Events',
-      icon: 'event',
-    },
-    {
-      title: 'Attendence',
-      icon: 'supervisor-account',
-    },
+    // {
+    //   title: 'Events',
+    //   icon: 'event',
+    // },
+    // {
+    //   title: 'Attendence',
+    //   icon: 'supervisor-account',
+    // },
   ];
 
   React.useLayoutEffect(() => {

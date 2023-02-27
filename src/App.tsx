@@ -32,7 +32,7 @@ function App(): JSX.Element {
 const Errorr = ({children}) => {
   return (
     <View style={{flex: 1}}>
-      <Text>error</Text>
+      {/* <Text>error</Text> */}
       {children}
     </View>
   );

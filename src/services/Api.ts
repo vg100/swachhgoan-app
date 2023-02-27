@@ -18,6 +18,7 @@ export class Api {
 
   static async getAllEvents() {
     const token = await Http.getToken();
+    console.log(token,'token')
     return Http.get('/event/', {
       headers: {
         authorization: token,

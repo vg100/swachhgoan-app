@@ -37,7 +37,7 @@ const Event = ({navigation, route}: any) => {
     } else {
       dispatch(EventRepositry.getUpcomingEvent());
     }
-  }, [route.params.title,isRefresh]);
+  }, [route.params.title]);
 
 
   // React.useLayoutEffect(() => {
@@ -107,7 +107,11 @@ const Event = ({navigation, route}: any) => {
   };
 
   if (eventItems.length < 1) {
-    return <Text>No data!</Text>;
+    return (
+      <View style= {{justifyContent: 'center',flex:1,alignItems:'center'}}>
+      <Text style={{fontSize:20}}>No Events!</Text>
+        </View>
+    )
   }
 
   return (
