@@ -19,6 +19,7 @@ import {subWeeks, addWeeks, format, subDays} from 'date-fns';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 // import Animated, { useSharedValue } from 'react-native-reanimated';
 // import Icon from 'react-native-vector-icons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Alert} from 'react-native';
 import {EventRepositry} from '../services/EventRepositry';
@@ -29,6 +30,7 @@ import {
   MaterialDatetimePickerAndroid,
   AndroidDatePickerType,
 } from 'react-native-material-datetime-picker';
+import { showMessage } from 'react-native-flash-message';
 // const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
 const today = new Date();
@@ -54,15 +56,15 @@ const NewEvent = ({navigation, route}: any) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const [formValues, setFormValues] = React.useState({
-    eventname: '' || route?.params?.item?.eventname,
-    training_type: '' || route?.params?.item?.type_of_training,
-    location: '' || route?.params?.item?.location,
-    no_participant: '' || route?.params?.item?.no_of_participant?.toString(),
-    male: '' || route?.params?.item?.no_of_males,
-    female: '' || route?.params?.item?.no_of_females,
-    startDate: '' || route?.params?.item?.startDate,
-    endDate: '' || route?.params?.item?.endDate,
-    report: '' || route?.params?.item?.report,
+    eventname: route?.params?.item ? route?.params?.item?.eventname:"",
+    training_type: '' || route?.params?.item ? route?.params?.item?.type_of_training:"",
+    location: route?.params?.item ? route?.params?.item?.location:"",
+    no_participant: route?.params?.item ? route?.params?.item?.no_of_participant?.toString():"",
+    male: route?.params?.item ? route?.params?.item?.no_of_males.toString():"",
+    female: route?.params?.item ? route?.params?.item?.no_of_females.toString():"",
+    startDate: route?.params?.item ? route?.params?.item?.startDate :"",
+    endDate: route?.params?.item ? route?.params?.item?.endDate :"",
+    report: route?.params?.item ? route?.params?.item?.report:"",
   });
 
   
@@ -74,18 +76,43 @@ const NewEvent = ({navigation, route}: any) => {
         [attrName]: value,
       };
     });
-    // setState({ [attrName]: value });
   }
 
   const submitHandler = () => {
-    dispatch(
-      EventRepositry.addNewEvent([...images, ...video], {
-        ...formValues,
-        startDate: currentStartDate.toISOString(),
-        endDate: currentEndDate.toISOString(),
-      }),
-    );
-    navigation.navigate("Category")
+if(formValues.eventname === '' && 
+   formValues.training_type === '' && 
+   formValues.location  === '' && 
+   formValues.startDate  === '' && 
+   formValues.endDate  === ''){
+  showMessage({
+    message: "Mandatory fields are required *",
+    type: "danger",
+  });
+}else{
+  dispatch(
+    EventRepositry.addNewEvent([...images, ...video], {
+      ...formValues,
+      startDate: currentStartDate.toISOString(),
+      endDate: currentEndDate.toISOString(),
+    }),
+  );
+  navigation.navigate("Category")
+  setFormValues({
+    eventname:'',
+    training_type:"",
+    location:"",
+    no_participant:"",
+    male:"",
+    female:"",
+    startDate:"",
+    endDate:"",
+    report:""
+  })
+  setIsVisible(false)
+}
+
+
+ 
   };
 
   const imageHandler = async () => {
@@ -194,22 +221,15 @@ const NewEvent = ({navigation, route}: any) => {
     setCurrentEndDate(today);
   };
   return (
-    <View
-      style={{
-        flex: 1,
-
-        paddingVertical: 20,
-      }}>
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 20,
-        }}>
-        <View style={{paddingHorizontal: 5, justifyContent: 'center'}}>
+   
+      
+      
           <ScrollView>
+            <View style={{marginHorizontal:20,marginVertical:20}}>
             <FloatingTitleTextInputField
               attrName="eventname"
               title="Event Name"
+              isRequired={true}
               value={formValues.eventname}
               updateMasterState={_updateMasterState}
             />
@@ -217,6 +237,7 @@ const NewEvent = ({navigation, route}: any) => {
             <FloatingTitleTextInputField
               attrName="training_type"
               title="Type of Training"
+              isRequired={true}
               value={formValues.training_type}
               updateMasterState={_updateMasterState}
             />
@@ -224,6 +245,7 @@ const NewEvent = ({navigation, route}: any) => {
             <FloatingTitleTextInputField
               attrName="location"
               title="Location"
+              isRequired={true}
               value={formValues.location}
               updateMasterState={_updateMasterState}
             />
@@ -272,28 +294,26 @@ const NewEvent = ({navigation, route}: any) => {
                     {format(currentEndDate, 'PP')}
                   </Text>
                 ) : (
-                  <Text style={{color: 'black'}}>Select Duration</Text>
+                  <Text style={{color: 'black'}}>Select Duration <Text style={{color:'red'}}>*</Text></Text>
                 )}
               </TouchableOpacity>
               {isVisible && (
                 <TouchableOpacity
                   onPress={cancelHandler}
                   style={{
-                    backgroundColor: 'black',
-                    borderRadius: 50,
-                    height: 15,
-                    width: 15,
+                   
                     marginRight: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                  
                   }}>
-                  <Text style={{color: 'white'}}>x</Text>
+                    
+                    <FontAwesome name="window-close" size={18} />
                 </TouchableOpacity>
               )}
             </View>
             <FloatingTitleTextInputField
               attrName="report"
               title="Report"
+              style={{height:100}}
               value={formValues.report}
               updateMasterState={_updateMasterState}
             />
@@ -383,10 +403,11 @@ const NewEvent = ({navigation, route}: any) => {
               }}>
               <Text style={{color: 'white'}}>Submit</Text>
             </TouchableOpacity>
+            </View>
           </ScrollView>
-        </View>
-      </View>
-    </View>
+    
+
+   
   );
 };
 

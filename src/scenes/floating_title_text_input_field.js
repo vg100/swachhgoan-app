@@ -37,7 +37,7 @@ export class FloatingTitleTextInputField extends Component {
     const { value } = this.props;
     this.position = new Animated.Value(value ? 1 : 0);
     this.state = {
-      isFieldActive: false,
+      isFieldActive: props.isFieldActive?true:false,
     }
   }
 
@@ -51,6 +51,7 @@ export class FloatingTitleTextInputField extends Component {
       }).start();
     }
   }
+
 
   _handleBlur = () => {
     if (this.state.isFieldActive && !this.props.value) {
@@ -87,14 +88,14 @@ export class FloatingTitleTextInputField extends Component {
 
   render() {
     return (
-      <View style = {[Styles.container,{...this.props.disableColor}]}>
+      <View style = {[Styles.container,{...this.props.disableColor},{...this.props.style}]}>
         <Animated.Text
           style = {[Styles.titleStyles, this._returnAnimatedTitleStyles(),{textTransform:'capitalize'}]}
         >
-          {this.props.title}
+          {this.props.title} {this.props.isRequired && (<Animated.Text style={{color:'red'}}>*</Animated.Text>)}
         </Animated.Text>
         <TextInput
-      editable={this.props.editable}
+          editable={this.props.editable}
           value = {this.props.value}
           style = {[Styles.textInput]}
           underlineColorAndroid = 'transparent'

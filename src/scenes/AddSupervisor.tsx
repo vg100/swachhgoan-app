@@ -8,22 +8,27 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {FloatingTitleTextInputField} from './floating_title_text_input_field';
+import { Alert } from 'react-native';
 
 const AddSupervisor = ({navigation, route}) => {
   const dispatch: any = useDispatch();
-  const [selectedRole, setSelectedRole] = React.useState(0);
-  const [selectedGender, setSelectedGender] = React.useState(0);
-
+  const role=route.params?.mode==='edit'?route.params?.item?.role==="USER"?0:1:0
+  const gender=route.params?.mode==='edit'?route.params?.item?.gender==="male"?0:1:0
+  const [selectedRole, setSelectedRole] = React.useState(role);
+  const [selectedGender, setSelectedGender] = React.useState(gender);
   const [formValues, setFormValues] = React.useState({
-    name: '',
-    email: '',
-    password: '',
-    phone_no: ''
+    name: route?.params?.item ? route?.params?.item?.name: '',
+    email: route?.params?.item ? route.params?.item?.email: '',
+    password: route?.params?.item ? route.params?.item?.passwordView: '',
+    phone_no:  route?.params?.item ? route.params?.item?.phone_no?.toString():''
   });
+
+  console.log(route.params?.item,'hh')
+
   function _updateMasterState(attrName: any, value: any) {
     console.log(attrName);
     setFormValues(preval => {
@@ -45,6 +50,37 @@ const AddSupervisor = ({navigation, route}) => {
     navigation.goBack();
   };
 
+const updateHandler=()=>{
+
+  dispatch(
+  AuthRepositry.updateSupervisor(route?.params?.item?._id,{
+    ...formValues,
+    role: selectedRole === 0 ? 'USER' : 'ADMIN',
+    gender: selectedGender === 0 ? 'male' : 'female',
+  }),
+  )
+  navigation.goBack();
+}
+
+
+const updateSupervisorHandler = () => {
+  return Alert.alert(
+    "Are your sure?",
+    "Are you sure you want to update this Supervisor?",
+    [
+      {
+        text: "Yes",
+        onPress:updateHandler,
+      },
+      {
+        text: "No",
+      },
+    ]
+  );
+};
+
+
+
   return (
     <View
       style={{
@@ -56,11 +92,13 @@ const AddSupervisor = ({navigation, route}) => {
         attrName="name"
         title="Name"
         value={formValues.name}
+        isFieldActive={route.params?.mode==='edit' && formValues.name ?true:false}
         updateMasterState={_updateMasterState}
       />
       <FloatingTitleTextInputField
         attrName="email"
         title="Email"
+        isFieldActive={route.params?.mode==='edit' && formValues.email ?true:false}
         value={formValues.email}
         updateMasterState={_updateMasterState}
       />
@@ -68,6 +106,7 @@ const AddSupervisor = ({navigation, route}) => {
       <FloatingTitleTextInputField
         attrName="password"
         title="Password"
+        isFieldActive={route.params?.mode==='edit' && formValues.password?true:false}
         value={formValues.password}
         updateMasterState={_updateMasterState}
       />
@@ -75,6 +114,7 @@ const AddSupervisor = ({navigation, route}) => {
 <FloatingTitleTextInputField
         attrName="phone_no"
         title="Phone No"
+        isFieldActive={route.params?.mode==='edit' && formValues.phone_no?true:false}
         value={formValues.phone_no}
         updateMasterState={_updateMasterState}
       />
@@ -152,7 +192,7 @@ const AddSupervisor = ({navigation, route}) => {
                     justifyContent: 'center',
                   },
                 ]}>
-                {index === selectedRole ? (
+                {index === (selectedRole || 0) ? (
                   <View
                     style={{
                       height: 12,
@@ -170,7 +210,7 @@ const AddSupervisor = ({navigation, route}) => {
       </View>
 
       <TouchableOpacity
-        onPress={submitHandler}
+        onPress={route?.params?.mode==='edit'?updateSupervisorHandler:submitHandler}
         style={{
           alignItems: 'center',
           justifyContent: 'center',
@@ -180,7 +220,9 @@ const AddSupervisor = ({navigation, route}) => {
           borderRadius: 5,
           marginVertical: 8,
         }}>
-        <Text style={{color: 'white'}}>Submit</Text>
+        <Text style={{color: 'white'}}>
+          {route?.params?.mode==='edit'?"Update":"Submit"}
+          </Text>
       </TouchableOpacity>
     </View>
   );

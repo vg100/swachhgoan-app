@@ -14,6 +14,8 @@ import {AuthRepositry} from '../services/AuthRepositry';
 import {EventRepositry} from '../services/EventRepositry';
 
 const UserDashboard = ({navigation, route}) => {
+
+
   const dispatch: any = useDispatch();
   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
     (state: any) => state.userLogin,

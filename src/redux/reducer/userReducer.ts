@@ -4,16 +4,17 @@ const initialState = {
   loggedIn: false,
   loggingIn: false,
   isAdmin: false,
+  loading:false,
 };
 
 export const UserReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case AuthActionTypes.LOGIN_REQUEST: {
-      return {...state, loggingIn: true};
+      return {...state, loggingIn: true,loading:true};
     }
     case AuthActionTypes.LOGIN_REQUEST_SUCCESS:
     case AuthActionTypes.USER_UPDATE: {
-      return {...state, loggingIn: false, loggedIn: true, ...action.payload};
+      return {...state, loggingIn: false,loading:false,loggedIn: true, ...action.payload};
     }
     case AuthActionTypes.USER_ERROR_OCCURRED: {
       return {...initialState};

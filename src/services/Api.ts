@@ -62,5 +62,13 @@ export class Api {
     });
   }
 
+  static async updateSupervisor(id:any,data: any) {
+    const token = await Http.getToken();
+    return Http.patch(`/user/update/${id}`,data,{
+      headers: {
+        authorization: token,
+      },
+    });
+  }
 
 }

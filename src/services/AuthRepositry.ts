@@ -43,10 +43,11 @@ export class AuthRepositry {
         return Promise.reject(e);
       }
     };
-  }
+}
   static updateUser(user: any) {
     return async (dispatch: any) => {
       try {
+        
         dispatch({type: AuthActionTypes.USER_UPDATE, payload: user});
         return;
       } catch (e) {
@@ -66,10 +67,12 @@ export class AuthRepositry {
   static createUser(data: any) {
     return async (dispatch: any) => {
       try {
+        dispatch({type: "showLoader"});
         const user = await Api.createUser(data);
         dispatch({type: AuthActionTypes.IS_REFRESH});
-        console.log(user, 'user');
+        dispatch({type: "hideLoader"});
       } catch (e) {
+        dispatch({type: "hideLoader"});
         return Promise.reject(e);
       }
     };
@@ -77,11 +80,14 @@ export class AuthRepositry {
 
   static getAllUser() {
     return async (dispatch: any) => {
+      dispatch({type: "showLoader"});
       dispatch({type: AuthActionTypes.ALL_USERS_REQUEST});
       try {
         const user = await Api.getAllUser();
         dispatch({type: AuthActionTypes.ALL_USERS_SUCCESS, payload: user});
+        dispatch({type: "hideLoader"});
       } catch (e) {
+        dispatch({type: "hideLoader"});
         dispatch({type: AuthActionTypes.ALL_USERS_FAIL});
         return Promise.reject(e);
       }
@@ -90,11 +96,28 @@ export class AuthRepositry {
   static deleteUser(id:any) {
     return async (dispatch: any) => {
       try {
+        dispatch({type: "showLoader"});
         const user = await Api.deleteUser(id);
         console.log(user)
         // dispatch({type: AuthActionTypes.DELETE_USER, payload: user});
         dispatch({type: AuthActionTypes.IS_REFRESH});
+        dispatch({type: "hideLoader"});
       } catch (e) {
+        dispatch({type: "hideLoader"});
+        return Promise.reject(e);
+      }
+    };
+  }
+
+  static updateSupervisor(id:any,data:any) {
+    return async (dispatch: any) => {
+      try {
+        dispatch({type: "showLoader"});
+        const user = await Api.updateSupervisor(id,data);
+        dispatch({type: AuthActionTypes.IS_REFRESH});
+        dispatch({type: "hideLoader"});
+      } catch (e) {
+        dispatch({type: "hideLoader"});
         return Promise.reject(e);
       }
     };

@@ -52,6 +52,7 @@ const AttendanceList = ({ navigation, route }) => {
     (state: any) => state.event,
   );
 
+
   return (
     <View
       style={{

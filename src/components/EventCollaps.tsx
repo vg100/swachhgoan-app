@@ -10,6 +10,7 @@ import {
   Image,
   FlatList,
   ImageBackground,
+  TextInput,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -44,7 +45,8 @@ const EventCollapsible = ({
   titleStyle = {},
   touchableWrapperStyle = {},
   touchableWrapperProps = {},
-  deleteHandler
+  deleteHandler,
+  selectedEvent
 }) => {
   console.log(item);
   let controlled = expanded !== null;
@@ -156,10 +158,10 @@ const EventCollapsible = ({
             borderRightWidth: 10,
             borderColor: 'black',
           }}
-          source={{
+          source={item?.files[0]?{
             uri: `${getEnvVariable()?.base_api_url
-              }/${item.files[0]?.replace(/\\/, '/')}`,
-          }}
+              }/${item?.files[0]?.replace(/\\/, '/')}`
+          }:require('../assets/images/no_uploaded.png')}
         />
         <View style={{ flexGrow: 1, paddingHorizontal: 10 }}>
           <Text
@@ -169,7 +171,7 @@ const EventCollapsible = ({
               fontFamily: 'Cabin-Bold',
               color: 'black',
             }}>
-            {item.eventname.toUpperCase()}
+            {item?.eventname.toUpperCase()}
           </Text>
           <Text
             style={{
@@ -210,37 +212,39 @@ const EventCollapsible = ({
             collapsed={!show}
             {...{ duration, ...collapsibleProps }}>
             <View style={{ borderWidth: 1, width: "90%", alignSelf: 'center', opacity: 0.1, marginVertical: 15 }} />
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' ,marginBottom:10}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' ,marginBottom:10}}>
               <View style={{ alignItems: 'center' }}>
-                <FontAwesome name="male" size={50} />
+                <FontAwesome name="male" size={45} />
                 <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{item?.no_of_males}</Text>
               </View>
               <FontAwesome name="arrows-h" size={32} />
               <View style={{ alignItems: 'center' }}>
-                <Foundation name="torsos-all-female" size={50} />
+                <Foundation name="torsos-all-female" size={45} />
                 <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{item?.no_of_participant}</Text>
               </View>
 
               <FontAwesome name="arrows-h" size={32} />
               <View style={{ alignItems: 'center' }}>
-                <FontAwesome name="female" size={50} />
+                <FontAwesome name="female" size={45} />
                 <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{item?.no_of_females}</Text>
               </View>
 
             </View>
             {
               item?.files?.length > 0 && (
-                <View style={{ paddingTop: 5 }}>
+                <View style={{ paddingTop: 10 }}>
                 <Text style={{ fontWeight: 'bold',marginLeft:5 }}>Files ({item?.files?.length})</Text>
                 <FlatList
                   nestedScrollEnabled
-                  data={[...item.files]}
+                  data={[...item?.files]}
                   keyExtractor={(item, index) => index.toString()}
                   // numColumns={2}
                   horizontal
                   renderItem={({ item, index }) => {
                     return (
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                      onPress={()=>selectedEvent(item)}
+                      >
                       <ImageBackground
                         imageStyle={{ opacity: 0.7 }}
                         source={{
@@ -279,9 +283,23 @@ const EventCollapsible = ({
             }
            
 
-            <View style={{ marginVertical: 20, paddingHorizontal: 5 }}>
+            <View style={{ marginTop: 20, paddingHorizontal: 5,marginBottom:10 }}>
               <Text style={{ fontWeight: 'bold' }}>Report</Text>
-              <Text>{item.report}</Text>
+            
+              <TextInput
+    multiline={true}
+    editable={false}
+    
+    style={{ color:'black',shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2},
+    shadowRadius: 10,
+    elevation: 0.5,
+    borderRadius:5,
+    backgroundColor: 'white',height:100, textAlignVertical: 'top',}}
+    // onChangeText={(text) => this.setState({text})}
+    value={item?.report}/>
+              {/* <Text>{item?.report}</Text> */}
             </View>
 
             <View
@@ -290,7 +308,7 @@ const EventCollapsible = ({
                 onPress={() => navigation.navigate('addEvent', { title: "Update Event" ,item})}
                 style={{
                   paddingVertical: 10,
-                  backgroundColor: 'blue',
+                  backgroundColor: '#0B7CCE',
                   flexGrow: 1,
                   alignItems: 'center',
                 }}>

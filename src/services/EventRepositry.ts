@@ -105,6 +105,7 @@ export class EventRepositry {
   static addNewEvent(list: any, data: any) {
     return async (dispatch: any, getState: any) => {
       try {
+        dispatch({type: "showLoader"});
         const formData = new FormData();
         Object.keys(data).forEach(key => {
           formData.append(key, data[key]);
@@ -114,6 +115,7 @@ export class EventRepositry {
         });
         const response = await Api.addNewEvent(formData);
         dispatch({type: EventActionTypes.IS_REFRESH});
+        dispatch({type: "hideLoader"});
       } catch (error) {
         Alert.alert('gg');
         return Promise.reject(error);

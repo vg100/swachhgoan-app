@@ -2,6 +2,7 @@ import _axios, {AxiosRequestConfig} from 'axios';
 import {getEnvVariable} from '../environment';
 import {ToastAndroid} from 'react-native';
 import {AsyncStorageService} from './AsyncStorage';
+import { showMessage, hideMessage } from "react-native-flash-message";
 export class Http {
   static getToken = async () => {
     const user = await AsyncStorageService.getUser();
@@ -71,6 +72,10 @@ export class Http {
       const errorMessage = message
         ? message
         : 'Something Went Wrong. Please Try Again';
+        showMessage({
+          message: message,
+          type: "danger",
+        });
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     } else {
       ToastAndroid.show(

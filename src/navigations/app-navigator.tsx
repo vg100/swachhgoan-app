@@ -104,9 +104,9 @@ export function AdminStackScreen() {
       <Stack.Screen
         name="addsupervisor"
         component={AddSupervisor}
-        options={{
-          title: 'Create Supervisor',
-        }}
+        options={({route}: any) => ({
+          title: route?.params?.title,
+        })}
       />
 
       <Stack.Screen
@@ -167,12 +167,6 @@ export function MyTabs() {
             <Image source={require('../assets/images/tab3.png')} />
           ),
         }}
-        // listeners={({navigation}) => ({
-        //   tabPress: e => {
-        //     e.preventDefault();
-        //     navigation.navigate('modal');
-        //   },
-        // })}
       />
     </Tab.Navigator>
   );

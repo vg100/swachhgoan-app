@@ -2,6 +2,8 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {AsyncStorageService} from '../services/AsyncStorage';
 import {EventReducer} from './reducer/eventReducer';
+import { fileReducer } from './reducer/FileReducer';
+import { LoaderReducer } from './reducer/loaderReducer';
 import {allUsersReducer, UserReducer} from './reducer/userReducer';
 
 const logger = (store: any) => (next: any) => (action: any) => {
@@ -17,6 +19,8 @@ const reducer = combineReducers({
   userLogin: UserReducer,
   event: EventReducer,
   allUsers: allUsersReducer,
+  file:fileReducer,
+  appLoader:LoaderReducer
 });
 
 const middleware = [logger, thunk];

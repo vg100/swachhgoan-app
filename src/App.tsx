@@ -9,9 +9,10 @@ import {
   View,
   LogBox,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import Routes from './navigations';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 import store from './redux/store';
 
 LogBox.ignoreAllLogs();
@@ -20,23 +21,15 @@ if (TextInput.defaultProps == null) TextInput.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;
 TextInput.defaultProps.allowFontScaling = false;
 function App(): JSX.Element {
+
   return (
-    <Errorr>
       <Provider store={store}>
         <Routes />
       </Provider>
-    </Errorr>
   );
 }
 
-const Errorr = ({children}) => {
-  return (
-    <View style={{flex: 1}}>
-    {/* <Text>error</Text> */}
-      {children}
-    </View>
-  );
-};
+
 
 const styles = StyleSheet.create({
   sectionContainer: {

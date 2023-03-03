@@ -7,12 +7,14 @@ import {
   I18nManager,
   Animated,
   Easing,
+  ActivityIndicator,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import Collapsible from 'react-native-collapsible';
+import { useSelector } from 'react-redux';
 const Collapsiblee = ({
   children,
   title = '',
@@ -38,13 +40,17 @@ const Collapsiblee = ({
   titleStyle = {},
   touchableWrapperStyle = {},
   touchableWrapperProps = {},
-  deleteHandler
+  deleteHandler,
+  editHandler,
+  viewEventHandler,
+  index,
+  loader
 }) => {
-  console.log(item);
+
   let controlled = expanded !== null;
   const [show, setShow] = useState(initExpanded);
   const [mounted, setMounted] = useState(initExpanded);
-
+  const {users, isRefresh} = useSelector((state: any) => state.allUsers);
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
   if (controlled) {
@@ -142,6 +148,8 @@ const Collapsiblee = ({
             justifyContent: 'space-between',
           }}>
           <View>
+           
+            <View style={{alignItems:'center',flexDirection:'row'}}>
             <Text
               style={{
                 color: `#545454`,
@@ -150,8 +158,10 @@ const Collapsiblee = ({
                 fontSize: 20,
             textTransform: 'capitalize',
               }}>
-              {item?.name}
+              {users[index]?.name}
             </Text>
+            {isRefresh && (<ActivityIndicator style={{marginHorizontal:10}} size={15} />)}
+            </View>
 
             <Text
               style={{
@@ -159,7 +169,7 @@ const Collapsiblee = ({
                 fontWeight: 'bold',
                 lineHeight: 21,
               }}>
-              {item?.email}
+              {users[index]?.email}
             </Text>
           </View>
           <View>
@@ -170,7 +180,7 @@ const Collapsiblee = ({
                   fontWeight: 'bold',
                   lineHeight: 21,
                 }}>
-                {item?.passwordView}
+                {users[index]?.passwordView}
               </Text>
             ) : (
               <TouchableOpacity
@@ -201,7 +211,7 @@ const Collapsiblee = ({
           }}>
           <View
             style={{
-              backgroundColor: item?.role === 'admin' ? 'indianred' : 'green',
+              backgroundColor: users[index]?.role === 'admin' ? 'indianred' : 'green',
               paddingVertical: 0,
               paddingHorizontal: 5,
               borderRadius: 3,
@@ -210,10 +220,10 @@ const Collapsiblee = ({
               style={{
                 fontWeight: 'bold',
                 lineHeight: 21,
-                color: item?.role === 'admin' ? 'white' : 'white',
+                color: users[index]?.role === 'admin' ? 'white' : 'white',
                 textTransform:'capitalize'
               }}>
-              {item?.role}
+              {users[index]?.role}
             </Text>
           </View>
 
@@ -233,16 +243,17 @@ const Collapsiblee = ({
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TouchableOpacity
+                 onPress={()=>editHandler(index)}
                 style={{
                   paddingVertical: 10,
-                  backgroundColor: 'blue',
+                  backgroundColor: '#0B7CCE',
                   flexGrow: 1,
                   alignItems: 'center',
                 }}>
                 <Text style={{color: 'white'}}>Edit</Text>
               </TouchableOpacity>
               <TouchableOpacity
-              onPress={()=>deleteHandler(item._id)}
+              onPress={()=>deleteHandler(users[index]?._id)}
                 style={{
                   paddingVertical: 10,
                   backgroundColor: 'red',

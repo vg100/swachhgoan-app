@@ -16,9 +16,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AsyncStorageService} from '../services/AsyncStorage';
 import {AuthRepositry} from '../services/AuthRepositry';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
+import FlashMessage from "react-native-flash-message";
 const Routes = () => {
   const dispatch: any = useDispatch();
+  const {appLoader} = useSelector(
+    (state: any) => state.appLoader,
+  );
   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
     (state: any) => state.userLogin,
   );
@@ -44,6 +47,7 @@ const Routes = () => {
   }
   return (
     <SafeAreaProvider>
+
       <NavigationContainer>
         {loggedIn ? (
           <>{isAdmin ? AdminStackScreen() : MyTabs()}</>
@@ -51,8 +55,38 @@ const Routes = () => {
           AuthStackScreen()
         )}
       </NavigationContainer>
+      {
+appLoader && (
+  <View 
+ 
+  style={{
+   position:'absolute',
+   top: 0,
+   bottom: 0,
+   width: "100%",
+   height: "100%",
+ 
+ backgroundColor:'rgba(0,0,0,0.6)',
+ justifyContent:'center',alignItems:'center'
+  }}
+  
+  >
+   <View style={{backgroundColor:'#D3D3D3',padding:25,elevation:2.5,borderRadius:12}}>
+   <ActivityIndicator animating={true} size={'large'} color={"#0B7CCE"}/>
+   </View>
+ 
+ 
+  </View> 
+)
+      }
+
+
+      <FlashMessage position="top" />
+
     </SafeAreaProvider>
   );
 };
 
 export default Routes;
+
+
