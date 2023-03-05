@@ -26,11 +26,7 @@ const AddSupervisor = ({navigation, route}) => {
     password: route?.params?.item ? route.params?.item?.passwordView: '',
     phone_no:  route?.params?.item ? route.params?.item?.phone_no?.toString():''
   });
-
-  console.log(route.params?.item,'hh')
-
   function _updateMasterState(attrName: any, value: any) {
-    console.log(attrName);
     setFormValues(preval => {
       return {
         ...preval,

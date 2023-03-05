@@ -71,4 +71,22 @@ export class Api {
     });
   }
 
+  static async updateEvent(id:any,data: any) {
+    const token = await Http.getToken();
+    return Http.patch(`/event/update/${id}`,data,{
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        authorization: token,
+      },
+    });
+  }
+  static async deleteFile(id:any,index: any) {
+    const token = await Http.getToken();
+    return Http.delete(`/event/deletefile/${id}/${index}`,{
+      headers: {
+        authorization: token,
+      },
+    });
+  }
+
 }

@@ -31,6 +31,7 @@ import {
   AndroidDatePickerType,
 } from 'react-native-material-datetime-picker';
 import { showMessage } from 'react-native-flash-message';
+import moment from 'moment';
 // const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
 const today = new Date();
@@ -67,6 +68,7 @@ const NewEvent = ({navigation, route}: any) => {
     report: route?.params?.item ? route?.params?.item?.report:"",
   });
 
+  console.log(moment(route?.params?.item?.startDate),'hhh')
   
   function _updateMasterState(attrName: any, value: any) {
     console.log(attrName);
@@ -220,6 +222,34 @@ if(formValues.eventname === '' &&
     setCurrentStartDate(today);
     setCurrentEndDate(today);
   };
+
+
+  const updateEventHandler=()=>{
+    return Alert.alert(
+      "Are your sure?",
+      "Are you sure you want to update this Event?",
+      [
+        {
+          text: "Yes",
+          onPress:updateHandler,
+        },
+        {
+          text: "No",
+        },
+      ]
+    );
+  
+   
+  }
+
+  const updateHandler=()=>{
+    dispatch(
+      EventRepositry.updateEvent(route?.params?.item?._id,[...images, ...video],{
+        ...formValues,
+      }),
+      )
+      navigation.goBack();
+  }
   return (
    
       
@@ -333,7 +363,7 @@ if(formValues.eventname === '' &&
                   Capture Image
                 </Text>
                 {images.length > 0 && (
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'row',alignItems:'center'}}>
                     <Text
                       style={{
                         marginRight: 5,
@@ -345,13 +375,13 @@ if(formValues.eventname === '' &&
                     <TouchableOpacity
                       onPress={() => setImages([])}
                       style={{
-                        backgroundColor: 'black',
-                        borderRadius: 50,
-                        paddingHorizontal: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        // backgroundColor: 'black',
+                        // borderRadius: 50,
+                        // paddingHorizontal: 5,
+                        // justifyContent: 'center',
+                        // alignItems: 'center',
                       }}>
-                      <Text style={{color: 'white'}}>X</Text>
+                       <FontAwesome name="window-close" size={16} color={'black'} />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -365,7 +395,7 @@ if(formValues.eventname === '' &&
                   Upload Video
                 </Text>
                 {video.length > 0 && (
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'row',alignItems:'center'}}>
                     <Text
                       style={{
                         marginRight: 5,
@@ -375,15 +405,8 @@ if(formValues.eventname === '' &&
                       {video.length + ' Selected'}
                     </Text>
                     <TouchableOpacity
-                      onPress={() => setVideo([])}
-                      style={{
-                        backgroundColor: 'black',
-                        borderRadius: 50,
-                        paddingHorizontal: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text style={{color: 'white'}}>X</Text>
+                      onPress={() => setVideo([])}>
+                       <FontAwesome name="window-close" size={16} color={'black'} />
                     </TouchableOpacity>
                   </View>
                 )}
@@ -391,7 +414,7 @@ if(formValues.eventname === '' &&
             </View>
 
             <TouchableOpacity
-              onPress={submitHandler}
+              onPress={route?.params?.title==="Update Event"?updateEventHandler:submitHandler}
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',

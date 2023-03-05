@@ -11,10 +11,12 @@ import {
   FlatList,
   ImageBackground,
   TextInput,
+  Alert,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Collapsible from 'react-native-collapsible';
@@ -23,11 +25,10 @@ import { getEnvVariable } from '../environment';
 const EventCollapsible = ({
   children,
   title = '',
-  item,
+  data,
   type,
   header,
   schedules,
-  data,
   navigation,
   initExpanded = false,
   expanded = null,
@@ -45,10 +46,10 @@ const EventCollapsible = ({
   titleStyle = {},
   touchableWrapperStyle = {},
   touchableWrapperProps = {},
-  deleteHandler,
+  handler,
   selectedEvent
 }) => {
-  console.log(item);
+
   let controlled = expanded !== null;
   const [show, setShow] = useState(initExpanded);
   const [mounted, setMounted] = useState(initExpanded);
@@ -134,6 +135,10 @@ const EventCollapsible = ({
     return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
   }
 
+  function deleteHandler(){
+
+  }
+
   return (
     <View
       style={[
@@ -158,9 +163,9 @@ const EventCollapsible = ({
             borderRightWidth: 10,
             borderColor: 'black',
           }}
-          source={item?.files[0]?{
+          source={data?.files[0]?{
             uri: `${getEnvVariable()?.base_api_url
-              }/${item?.files[0]?.replace(/\\/, '/')}`
+              }/${data?.files[0]?.replace(/\\/, '/')}`
           }:require('../assets/images/no_uploaded.png')}
         />
         <View style={{ flexGrow: 1, paddingHorizontal: 10 }}>
@@ -171,7 +176,7 @@ const EventCollapsible = ({
               fontFamily: 'Cabin-Bold',
               color: 'black',
             }}>
-            {item?.eventname.toUpperCase()}
+            {data?.eventname.toUpperCase()}
           </Text>
           <Text
             style={{
@@ -180,8 +185,8 @@ const EventCollapsible = ({
               fontFamily: 'Cabin-Italic',
               color: 'gray',
             }}>
-            {Moment(item?.startDate).format('DD-MMM-YYYY')} -{' '}
-            {Moment(item?.endDate).format('DD-MMM-YYYY')}
+            {Moment(data?.startDate).format('DD-MMM-YYYY')} -{' '}
+            {Moment(data?.endDate).format('DD-MMM-YYYY')}
           </Text>
           <Text
             style={{
@@ -190,7 +195,7 @@ const EventCollapsible = ({
               fontFamily: 'Cabin-Italic',
               color: 'gray',
             }}>
-            {item?.location}
+            {data?.location}
           </Text>
           {noArrow ? null : (
             <Animated.View style={{ alignSelf: 'flex-end', transform: [{ rotate: rotateAnimDeg }] }}>
@@ -215,33 +220,34 @@ const EventCollapsible = ({
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' ,marginBottom:10}}>
               <View style={{ alignItems: 'center' }}>
                 <FontAwesome name="male" size={45} />
-                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{item?.no_of_males}</Text>
+                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{data?.no_of_males}</Text>
               </View>
               <FontAwesome name="arrows-h" size={32} />
               <View style={{ alignItems: 'center' }}>
                 <Foundation name="torsos-all-female" size={45} />
-                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{item?.no_of_participant}</Text>
+                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{data?.no_of_participant}</Text>
               </View>
 
               <FontAwesome name="arrows-h" size={32} />
               <View style={{ alignItems: 'center' }}>
                 <FontAwesome name="female" size={45} />
-                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{item?.no_of_females}</Text>
+                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{data?.no_of_females}</Text>
               </View>
 
             </View>
             {
-              item?.files?.length > 0 && (
-                <View style={{ paddingTop: 10 }}>
-                <Text style={{ fontWeight: 'bold',marginLeft:5 }}>Files ({item?.files?.length})</Text>
+              data?.files?.length > 0 && (
+                <View style={{ paddingTop: 10}}>
+                <Text style={{ fontWeight: 'bold',marginLeft:5 }}>Files ({data?.files?.length})</Text>
                 <FlatList
                   nestedScrollEnabled
-                  data={[...item?.files]}
+                  data={[...data?.files]}
                   keyExtractor={(item, index) => index.toString()}
                   // numColumns={2}
                   horizontal
                   renderItem={({ item, index }) => {
                     return (
+                      <>
                       <TouchableOpacity
                       onPress={()=>selectedEvent(item)}
                       >
@@ -274,7 +280,13 @@ const EventCollapsible = ({
   
                         </ImageBackground>
                         </TouchableOpacity>
-                      
+                        <TouchableOpacity 
+                        onPress={()=>handler(data?._id,index)}
+                        style={{backgroundColor:'white',position:'absolute',right:1,borderRadius:50,borderWidth:1,width:20,height:20,alignItems:'center',justifyContent:'center'}}>
+                        <Entypo name="cross" size={16} color="black" />
+                          {/* <Text>X</Text> */}
+                        </TouchableOpacity>
+                        </>
                     );
                   }}
                 />
@@ -298,14 +310,14 @@ const EventCollapsible = ({
     borderRadius:5,
     backgroundColor: 'white',height:100, textAlignVertical: 'top',}}
     // onChangeText={(text) => this.setState({text})}
-    value={item?.report}/>
+    value={data?.report}/>
               {/* <Text>{item?.report}</Text> */}
             </View>
 
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('addEvent', { title: "Update Event" ,item})}
+                onPress={() => navigation.navigate('addEvent', { title: "Update Event" ,item:data})}
                 style={{
                   paddingVertical: 10,
                   backgroundColor: '#0B7CCE',
@@ -317,7 +329,7 @@ const EventCollapsible = ({
 
             </View>
             <TouchableOpacity
-              onPress={() => navigation.navigate('attendance', { title: "Attendance" ,item})}
+              onPress={() => navigation.navigate('attendance', { title: "Attendance" ,item:data})}
               style={{
                 paddingVertical: 10,
                 backgroundColor: '#00A300',

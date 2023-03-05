@@ -1,4 +1,5 @@
 import {Alert} from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import {Api} from './Api';
 
 export enum EventActionTypes {
@@ -123,7 +124,49 @@ export class EventRepositry {
     };
   }
 
+  static updateEvent(id:any,list:any,data:any) {
+    return async (dispatch: any) => {
+      try {
+        dispatch({type: "showLoader"});
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+          formData.append(key, data[key]);
+        });
+        list.forEach(async (image: any) => {
+          formData.append('file', image);
+        });
+        const event = await Api.updateEvent(id,formData);
+        dispatch({type: EventActionTypes.IS_REFRESH});
+        dispatch({type: "hideLoader"});
+        showMessage({
+          message: event.message,
+          type: "success",
+        });
+      } catch (e) {
+        dispatch({type: "hideLoader"});
+        return Promise.reject(e);
+      }
+    };
+  }
 
+  static deleteFile(id:any,index:any){
+    return async (dispatch: any) => {
+      try {
+
+        dispatch({type: "showLoader"});
+        const event = await Api.deleteFile(id,index);
+        dispatch({type: EventActionTypes.IS_REFRESH});
+        dispatch({type: "hideLoader"});
+        showMessage({
+          message: event.message,
+          type: "success",
+        });
+      } catch (e) {
+        dispatch({type: "hideLoader"});
+        return Promise.reject(e);
+      }
+    };
+  }
 
   
 }

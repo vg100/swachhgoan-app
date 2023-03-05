@@ -49,7 +49,7 @@ const [orientation,setorientation]=React.useState({
     } else {
       dispatch(EventRepositry.getUpcomingEvent());
     }
-  }, [route.params.title]);
+  }, [route.params.title,isRefresh]);
 
 
   React.useLayoutEffect(() => {
@@ -149,6 +149,22 @@ const [orientation,setorientation]=React.useState({
     videoPlayer.presentFullscreenPlayer();
   }
 
+  const deleteHandler=(id:any,index:any)=>{
+      return Alert.alert(
+        "Are your sure?",
+        "Are you sure you want to remove  this file?",
+        [
+          {
+            text: "Yes",
+            onPress:()=> dispatch(EventRepositry.deleteFile(id,index)),
+          },
+          {
+            text: "No",
+          },
+        ]
+      );
+  }
+
   if (filtedData.length < 1) {
     return (
       <View style= {{justifyContent: 'center',flex:1,alignItems:'center'}}>
@@ -156,6 +172,7 @@ const [orientation,setorientation]=React.useState({
         </View>
     )
   }
+
 
 
 
@@ -169,10 +186,10 @@ const [orientation,setorientation]=React.useState({
         renderItem={({item}) => {
          
           return (
-            <EventCollapsible item={item} 
+            <EventCollapsible data={item} 
             navigation={navigation}
             selectedEvent={(event:any)=>setSelectedFile(event)}
-
+            handler={((id:any,index:any)=>deleteHandler(id,index))}
           
             />
             
