@@ -22,7 +22,7 @@ export class AuthRepositry {
       try {
         dispatch({type: AuthActionTypes.LOGIN_REQUEST});
         const user = await Api.login(data);
-        if (user?.user?.role === 'admin') {
+        if (user?.user?.role === 'ADMIN') {
 
           await AsyncStorageService.setUser({...user, isAdmin: true});
           dispatch({
