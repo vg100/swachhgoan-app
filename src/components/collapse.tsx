@@ -211,7 +211,7 @@ const Collapsiblee = ({
           }}>
           <View
             style={{
-              backgroundColor: users[index]?.role === 'admin' ? 'indianred' : 'green',
+              backgroundColor: users[index]?.role === 'ADMIN' ? 'indianred' : 'green',
               paddingVertical: 0,
               paddingHorizontal: 5,
               borderRadius: 3,
@@ -220,7 +220,7 @@ const Collapsiblee = ({
               style={{
                 fontWeight: 'bold',
                 lineHeight: 21,
-                color: users[index]?.role === 'admin' ? 'white' : 'white',
+                color: users[index]?.role === 'ADMIN' ? 'white' : 'white',
                 textTransform:'capitalize'
               }}>
               {users[index]?.role}
