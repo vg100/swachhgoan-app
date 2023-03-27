@@ -21,15 +21,12 @@ if (TextInput.defaultProps == null) TextInput.defaultProps = {};
 Text.defaultProps.allowFontScaling = false;
 TextInput.defaultProps.allowFontScaling = false;
 function App(): JSX.Element {
-
   return (
-      <Provider store={store}>
-        <Routes />
-      </Provider>
+    <Provider store={store}>
+      <Routes />
+    </Provider>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   sectionContainer: {

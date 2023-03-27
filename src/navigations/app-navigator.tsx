@@ -47,7 +47,7 @@ export function UserStackScreen() {
           title: route.params.title,
         })}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="attendancelist"
         component={AttendanceList}
         options={({route}: any) => ({
@@ -140,7 +140,7 @@ export function MyTabs() {
               case 'attendance':
               case 'addEvent':
               case 'eventDetail':
-                case 'attendancelist':
+              case 'attendancelist':
                 return {display: 'none'};
               default:
                 return;

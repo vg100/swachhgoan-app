@@ -30,8 +30,9 @@ import {
   MaterialDatetimePickerAndroid,
   AndroidDatePickerType,
 } from 'react-native-material-datetime-picker';
-import { showMessage } from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
+import {useRoute} from '@react-navigation/native';
 // const myIcon = <Icon name="rocket" size={30} color="#900" />;
 
 const today = new Date();
@@ -39,8 +40,14 @@ const start = subWeeks(today, 1);
 const end = addWeeks(today, 2);
 
 const NewEvent = ({navigation, route}: any) => {
+  console.log(route, 'routeroute');
+
+  // const route = useRoute()
   const {filtedData, eventItems, loading, isRefresh} = useSelector(
     (state: any) => state.event,
+  );
+  const {user, loggedIn, loggingIn, isAdmin} = useSelector(
+    (state: any) => state.userLogin,
   );
   const dispatch: any = useDispatch();
   const [images, setImages] = React.useState([]);
@@ -57,19 +64,18 @@ const NewEvent = ({navigation, route}: any) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const [formValues, setFormValues] = React.useState({
-    eventname: route?.params?.item ? route?.params?.item?.eventname:"",
-    training_type: '' || route?.params?.item ? route?.params?.item?.type_of_training:"",
-    location: route?.params?.item ? route?.params?.item?.location:"",
-    no_participant: route?.params?.item ? route?.params?.item?.no_of_participant?.toString():"",
-    male: route?.params?.item ? route?.params?.item?.no_of_males.toString():"",
-    female: route?.params?.item ? route?.params?.item?.no_of_females.toString():"",
-    startDate: route?.params?.item ? route?.params?.item?.startDate :"",
-    endDate: route?.params?.item ? route?.params?.item?.endDate :"",
-    report: route?.params?.item ? route?.params?.item?.report:"",
+    eventname: route?.params?.item ? route?.params?.item?.eventname : '',
+    district: route?.params?.item ? route?.params?.item?.district : '',
+    block: route?.params?.item ? route?.params?.item?.block : '',
+    gp: route?.params?.item ? route?.params?.item?.gp : '',
+    venue: route?.params?.item ? route?.params?.item?.venue : '',
+    no_participant: route?.params?.item
+      ? route?.params?.item?.no_of_participant?.toString()
+      : '',
+    startDate: route?.params?.item ? route?.params?.item?.startDate : '',
+    endDate: route?.params?.item ? route?.params?.item?.endDate : '',
   });
 
-  console.log(moment(route?.params?.item?.startDate),'hhh')
-  
   function _updateMasterState(attrName: any, value: any) {
     console.log(attrName);
     setFormValues(preval => {
@@ -81,118 +87,41 @@ const NewEvent = ({navigation, route}: any) => {
   }
 
   const submitHandler = () => {
-if(formValues.eventname === '' && 
-   formValues.training_type === '' && 
-   formValues.location  === '' && 
-   formValues.startDate  === '' && 
-   formValues.endDate  === ''){
-  showMessage({
-    message: "Mandatory fields are required *",
-    type: "danger",
-  });
-}else{
-  dispatch(
-    EventRepositry.addNewEvent([...images, ...video], {
-      ...formValues,
-      startDate: currentStartDate.toISOString(),
-      endDate: currentEndDate.toISOString(),
-    }),
-  );
-  navigation.navigate("Category")
-  setFormValues({
-    eventname:'',
-    training_type:"",
-    location:"",
-    no_participant:"",
-    male:"",
-    female:"",
-    startDate:"",
-    endDate:"",
-    report:""
-  })
-  setIsVisible(false)
-}
+    if (
+      formValues.eventname != '' &&
+      formValues.district != '' &&
+      formValues.block != '' &&
+      formValues.gp != '' &&
+      formValues.venue != '' &&
+      formValues.no_participant != ''
+    ) {
+      dispatch(
+        EventRepositry.addNewEvent({
+          ...formValues,
+          startDate: currentStartDate.toISOString(),
+          endDate: currentEndDate.toISOString(),
+        }),
+      );
 
+      setFormValues({
+        eventname: '',
+        district: '',
+        block: '',
+        gp: '',
+        venue: '',
+        no_participant: '',
+        startDate: '',
+        endDate: '',
+      });
 
- 
-  };
-
-  const imageHandler = async () => {
-    // let options:any = {
-    //     selectionLimit:5,
-    //     mediaType:"photo"
-    //   };
-    const options: any = {
-      title: 'Video Picker',
-      mediaType: 'photo',
-      selectionLimit: 5,
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    await launchImageLibrary(options, (response: any) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        let results: any = [];
-        response &&
-          response?.assets?.forEach((imageInfo: any) =>
-            results.push({
-              name: imageInfo.fileName,
-              type: imageInfo.type,
-              uri: imageInfo.uri,
-            }),
-          );
-        if (response && response?.assets?.length > 1) {
-          setImages([...results, ...images]); // a list
-        } else {
-          //image only 1  **it works!**
-          setImages(results); // a list
-        }
-      }
-    });
-  };
-
-  const videoHandler = async () => {
-    const options: any = {
-      title: 'Video Picker',
-      mediaType: 'video',
-      selectionLimit: 5,
-      storageOptions: {
-        skipBackup: true,
-        path: 'videos',
-      },
-    };
-    await launchImageLibrary(options, (response: any) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        let results: any = [];
-        response &&
-          response?.assets?.forEach((imageInfo: any) =>
-            results.push({
-              name: imageInfo.fileName,
-              type: imageInfo.type,
-              uri: imageInfo.uri,
-            }),
-          );
-        if (response && response?.assets?.length > 1) {
-          setVideo([...results, ...video]); // a list
-        } else {
-          //image only 1  **it works!**
-          setVideo(results); // a list
-        }
-      }
-    });
+      setIsVisible(false);
+      navigation.goBack();
+    } else {
+      showMessage({
+        message: 'All filed Required',
+        type: 'danger',
+      });
+    }
   };
 
   const showDatePicker = () => {
@@ -223,72 +152,101 @@ if(formValues.eventname === '' &&
     setCurrentEndDate(today);
   };
 
-
-  const updateEventHandler=()=>{
+  const updateEventHandler = () => {
     return Alert.alert(
-      "Are your sure?",
-      "Are you sure you want to update this Event?",
+      'Are your sure?',
+      'Are you sure you want to update this Event?',
       [
         {
-          text: "Yes",
-          onPress:updateHandler,
+          text: 'Yes',
+          onPress: updateHandler,
         },
         {
-          text: "No",
+          text: 'No',
         },
-      ]
+      ],
     );
-  
-   
-  }
+  };
 
-  const updateHandler=()=>{
+  const updateHandler = () => {
     dispatch(
-      EventRepositry.updateEvent(route?.params?.item?._id,[...images, ...video],{
-        ...formValues,
-      }),
-      )
-      navigation.goBack();
-  }
-  return (
-   
-      
-      
-          <ScrollView>
-            <View style={{marginHorizontal:20,marginVertical:20}}>
-            <FloatingTitleTextInputField
-              attrName="eventname"
-              title="Event Name"
-              isRequired={true}
-              value={formValues.eventname}
-              updateMasterState={_updateMasterState}
-            />
+      EventRepositry.updateEvent(
+        route?.params?.item?._id,
+        [...images, ...video],
+        {
+          ...formValues,
+        },
+      ),
+    );
+    navigation.goBack();
+  };
 
-            <FloatingTitleTextInputField
+  return (
+    <ScrollView>
+      <View style={{marginHorizontal: 20, marginVertical: 20}}>
+        <FloatingTitleTextInputField
+          attrName="eventname"
+          title="Name of Event/Training"
+          isRequired={true}
+          value={formValues.eventname}
+          updateMasterState={_updateMasterState}
+        />
+
+        {/* <FloatingTitleTextInputField
               attrName="training_type"
               title="Type of Training"
               isRequired={true}
               value={formValues.training_type}
               updateMasterState={_updateMasterState}
-            />
+            /> */}
 
-            <FloatingTitleTextInputField
-              attrName="location"
-              title="Location"
-              isRequired={true}
-              value={formValues.location}
-              updateMasterState={_updateMasterState}
-            />
+        <FloatingTitleTextInputField
+          attrName="district"
+          title="District"
+          isRequired={true}
+          value={formValues.district}
+          updateMasterState={_updateMasterState}
+        />
+        <FloatingTitleTextInputField
+          attrName="block"
+          title="Block"
+          isRequired={true}
+          value={formValues.block}
+          updateMasterState={_updateMasterState}
+        />
+        <FloatingTitleTextInputField
+          attrName="gp"
+          title="GP"
+          isRequired={true}
+          value={formValues.gp}
+          updateMasterState={_updateMasterState}
+        />
+        <FloatingTitleTextInputField
+          attrName="venue"
+          title="Venue"
+          isRequired={true}
+          value={formValues.venue}
+          updateMasterState={_updateMasterState}
+        />
+        <FloatingTitleTextInputField
+          attrName="trainer"
+          title="Name of Trainer/Supervisor"
+          keyboardType="numeric"
+          editable={false}
+          value={user.name}
+          disableColor={{backgroundColor: 'lightgray'}}
+          isFieldActive={user.name ? true : false}
+          // updateMasterState={_updateMasterState}
+        />
+        <FloatingTitleTextInputField
+          attrName="no_participant"
+          title="Number of participant"
+          keyboardType="numeric"
+          value={formValues.no_participant}
+          updateMasterState={_updateMasterState}
+        />
 
-            <FloatingTitleTextInputField
-              attrName="no_participant"
-              title="Number of participant"
-              keyboardType="numeric"
-              value={formValues.no_participant}
-              updateMasterState={_updateMasterState}
-            />
-
-            <FloatingTitleTextInputField
+        {/* <FloatingTitleTextInputField
               attrName="male"
               title="Male"
               keyboardType="numeric"
@@ -302,53 +260,52 @@ if(formValues.eventname === '' &&
               keyboardType="numeric"
               value={formValues.female}
               updateMasterState={_updateMasterState}
-            />
-            <View
+            /> */}
+        <View
+          style={{
+            width: '100%',
+            borderRadius: 8,
+            borderBottomWidth: 1,
+            borderColor: 'gray',
+            height: 50,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 5,
+            marginVertical: 6,
+            backgroundColor: 'white',
+          }}>
+          <TouchableOpacity onPress={showDatePicker}>
+            {isVisible ? (
+              <Text style={{color: 'black'}}>
+                From {format(currentStartDate, 'PP')} To{' '}
+                {format(currentEndDate, 'PP')}
+              </Text>
+            ) : (
+              <Text style={{color: 'black'}}>
+                Select Duration <Text style={{color: 'red'}}>*</Text>
+              </Text>
+            )}
+          </TouchableOpacity>
+          {isVisible && (
+            <TouchableOpacity
+              onPress={cancelHandler}
               style={{
-                width: '100%',
-                borderRadius: 8,
-                borderBottomWidth: 1,
-                borderColor: 'gray',
-                height: 50,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingHorizontal: 5,
-                marginVertical: 6,
-                backgroundColor: 'white',
+                marginRight: 10,
               }}>
-              <TouchableOpacity onPress={showDatePicker}>
-                {isVisible ? (
-                  <Text style={{color: 'black'}}>
-                    From {format(currentStartDate, 'PP')} To{' '}
-                    {format(currentEndDate, 'PP')}
-                  </Text>
-                ) : (
-                  <Text style={{color: 'black'}}>Select Duration <Text style={{color:'red'}}>*</Text></Text>
-                )}
-              </TouchableOpacity>
-              {isVisible && (
-                <TouchableOpacity
-                  onPress={cancelHandler}
-                  style={{
-                   
-                    marginRight: 10,
-                  
-                  }}>
-                    
-                    <FontAwesome name="window-close" size={18} />
-                </TouchableOpacity>
-              )}
-            </View>
-            <FloatingTitleTextInputField
+              <FontAwesome name="window-close" size={18} />
+            </TouchableOpacity>
+          )}
+        </View>
+        {/* <FloatingTitleTextInputField
               attrName="report"
               title="Report"
               style={{height:100}}
               value={formValues.report}
               updateMasterState={_updateMasterState}
-            />
+            /> */}
 
-            <View
+        {/* <View
               style={{
                 justifyContent: 'space-around',
                 flexDirection: 'row',
@@ -411,26 +368,27 @@ if(formValues.eventname === '' &&
                   </View>
                 )}
               </TouchableOpacity>
-            </View>
+            </View> */}
 
-            <TouchableOpacity
-              onPress={route?.params?.title==="Update Event"?updateEventHandler:submitHandler}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'blue',
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-                borderRadius: 5,
-                marginVertical: 8,
-              }}>
-              <Text style={{color: 'white'}}>Submit</Text>
-            </TouchableOpacity>
-            </View>
-          </ScrollView>
-    
-
-   
+        <TouchableOpacity
+          onPress={
+            route?.params?.title === 'Update Event'
+              ? updateEventHandler
+              : submitHandler
+          }
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'blue',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            borderRadius: 5,
+            marginVertical: 8,
+          }}>
+          <Text style={{color: 'white'}}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 

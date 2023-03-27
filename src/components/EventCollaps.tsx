@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -21,8 +21,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Collapsible from 'react-native-collapsible';
 import Moment from 'moment';
-import { getEnvVariable } from '../environment';
+import {getEnvVariable} from '../environment';
+import RNFetchBlob from 'rn-fetch-blob';
+const {config, fs} = RNFetchBlob;
 const EventCollapsible = ({
+  routeName,
   children,
   title = '',
   data,
@@ -47,9 +50,8 @@ const EventCollapsible = ({
   touchableWrapperStyle = {},
   touchableWrapperProps = {},
   handler,
-  selectedEvent
+  selectedEvent,
 }) => {
-
   let controlled = expanded !== null;
   const [show, setShow] = useState(initExpanded);
   const [mounted, setMounted] = useState(initExpanded);
@@ -131,13 +133,11 @@ const EventCollapsible = ({
 
   const [showpassword, setShowpassword] = React.useState(false);
 
-  function isImgUrl(url:any) {
-    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url)
+  function isImgUrl(url: any) {
+    return /\.(jpg|jpeg|png|webp|avif|gif)$/.test(url);
   }
 
-  function deleteHandler(){
-
-  }
+  function deleteHandler() {}
 
   return (
     <View
@@ -145,7 +145,7 @@ const EventCollapsible = ({
         styles.container,
         style,
         touchableWrapperStyle,
-        { overflow: 'hidden', marginTop: 20 },
+        {overflow: 'hidden', marginTop: 20},
       ]}
       activeOpacity={activeOpacityFeedback}
       {...touchableWrapperProps}>
@@ -155,7 +155,6 @@ const EventCollapsible = ({
         }}
         activeOpacity={0.6}
         onPress={handleToggleShow}>
-
         <Image
           style={{
             height: 100,
@@ -163,12 +162,9 @@ const EventCollapsible = ({
             borderRightWidth: 10,
             borderColor: 'black',
           }}
-          source={data?.files[0]?{
-            uri: `${getEnvVariable()?.base_api_url
-              }/${data?.files[0]?.replace(/\\/, '/')}`
-          }:require('../assets/images/no_uploaded.png')}
+          source={require('../assets/images/no_uploaded.png')}
         />
-        <View style={{ flexGrow: 1, paddingHorizontal: 10 }}>
+        <View style={{flexGrow: 1, paddingHorizontal: 10}}>
           <Text
             style={{
               fontSize: 20,
@@ -198,104 +194,147 @@ const EventCollapsible = ({
             {data?.location}
           </Text>
           {noArrow ? null : (
-            <Animated.View style={{ alignSelf: 'flex-end', transform: [{ rotate: rotateAnimDeg }] }}>
+            <Animated.View
+              style={{
+                alignSelf: 'flex-end',
+                transform: [{rotate: rotateAnimDeg}],
+              }}>
               <Icon name="chevron-down" size={22} color="#3766E8" />
             </Animated.View>
           )}
-
         </View>
       </TouchableOpacity>
 
-
-
-
-
       {mounted ? (
-        <View style={{ width: '100%', ...collapsibleContainerStyle }}>
+        <View style={{width: '100%', ...collapsibleContainerStyle}}>
           <Collapsible
             onAnimationEnd={handleAnimationEnd}
             collapsed={!show}
-            {...{ duration, ...collapsibleProps }}>
-            <View style={{ borderWidth: 1, width: "90%", alignSelf: 'center', opacity: 0.1, marginVertical: 15 }} />
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' ,marginBottom:10}}>
-              <View style={{ alignItems: 'center' }}>
+            {...{duration, ...collapsibleProps}}>
+            <View
+              style={{
+                borderWidth: 1,
+                width: '90%',
+                alignSelf: 'center',
+                opacity: 0.1,
+                marginVertical: 15,
+              }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+                marginBottom: 10,
+              }}>
+              <View style={{alignItems: 'center'}}>
                 <FontAwesome name="male" size={45} />
-                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{data?.no_of_males}</Text>
+                <Text
+                  style={{
+                    marginTop: 2,
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    color: 'black',
+                  }}>
+                  {data?.no_of_males}
+                </Text>
               </View>
               <FontAwesome name="arrows-h" size={32} />
-              <View style={{ alignItems: 'center' }}>
+              <View style={{alignItems: 'center'}}>
                 <Foundation name="torsos-all-female" size={45} />
-                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{data?.no_of_participant}</Text>
+                <Text
+                  style={{
+                    marginTop: 2,
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    color: 'black',
+                  }}>
+                  {data?.no_of_participant}
+                </Text>
               </View>
 
               <FontAwesome name="arrows-h" size={32} />
-              <View style={{ alignItems: 'center' }}>
+              <View style={{alignItems: 'center'}}>
                 <FontAwesome name="female" size={45} />
-                <Text style={{ marginTop: 2, fontSize: 15, fontWeight: 'bold', color: 'black' }}>{data?.no_of_females}</Text>
+                <Text
+                  style={{
+                    marginTop: 2,
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                    color: 'black',
+                  }}>
+                  {data?.no_of_females}
+                </Text>
               </View>
-
             </View>
-            {
-              data?.files?.length > 0 && (
-                <View style={{ paddingTop: 10}}>
-                <Text style={{ fontWeight: 'bold',marginLeft:5 }}>Files ({data?.files?.length})</Text>
+            {data?.files?.length > 0 && (
+              <View style={{paddingTop: 10}}>
+                <Text style={{fontWeight: 'bold', marginLeft: 5}}>
+                  Files ({data?.files?.length})
+                </Text>
                 <FlatList
                   nestedScrollEnabled
                   data={[...data?.files]}
                   keyExtractor={(item, index) => index.toString()}
                   // numColumns={2}
                   horizontal
-                  renderItem={({ item, index }) => {
+                  renderItem={({item, index}) => {
                     return (
                       <>
-                      <TouchableOpacity
-                      onPress={()=>selectedEvent(item)}
-                      >
-                      <ImageBackground
-                        imageStyle={{ opacity: 0.7 }}
-                        source={{
-                          uri: `${getEnvVariable()?.base_api_url}/${item?.replace(
-                            /\\/,
-                            '/',
-                          )}`,
-                        }}
-                        style={{
-                          justifyContent: 'center',
-                          width: 90,
-                          marginHorizontal: 3,
-                          marginVertical: 5,
-                          height: 90,
-                          borderRadius: 5,
-                          backgroundColor: '#0F0F0F',
-  
-                          // borderRadius: 4,
-                          overflow: 'hidden',
-                        }}
-                        resizeMode="contain">
-  {
-    !isImgUrl(item) && (
-      <FontAwesome style={{alignSelf:'center'}} name="play-circle" size={40} />
-    )
-  }
-  
-                        </ImageBackground>
+                        <TouchableOpacity onPress={() => selectedEvent(item)}>
+                          <Image
+                            // imageStyle={{opacity: 0.7}}
+                            source={{
+                              uri: `${
+                                getEnvVariable()?.base_api_url
+                              }/${item?.replace(/\\/, '/')}`,
+                            }}
+                            style={{
+                              justifyContent: 'center',
+                              width: 90,
+                              marginHorizontal: 3,
+                              marginVertical: 5,
+                              height: 90,
+                              borderRadius: 5,
+                              backgroundColor: '#0F0F0F',
+
+                              // borderRadius: 4,
+                              overflow: 'hidden',
+                            }}
+                            resizeMode="contain"
+                          />
+                          {/* {!isImgUrl(item) && (
+                              <FontAwesome
+                                style={{alignSelf: 'center'}}
+                                name="play-circle"
+                                size={40}
+                              />
+                            )} */}
                         </TouchableOpacity>
-                        <TouchableOpacity 
-                        onPress={()=>handler(data?._id,index)}
-                        style={{backgroundColor:'white',position:'absolute',right:1,borderRadius:50,borderWidth:1,width:20,height:20,alignItems:'center',justifyContent:'center'}}>
-                        <Entypo name="cross" size={16} color="black" />
+                        <TouchableOpacity
+                          onPress={() => handler(data?._id, index)}
+                          style={{
+                            backgroundColor: 'white',
+                            position: 'absolute',
+                            right: 1,
+                            borderRadius: 50,
+                            borderWidth: 1,
+                            width: 20,
+                            height: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Entypo name="cross" size={16} color="black" />
                           {/* <Text>X</Text> */}
                         </TouchableOpacity>
-                        </>
+                      </>
                     );
                   }}
                 />
               </View>
-              )
-            }
-           
+            )}
 
-            <View style={{ marginTop: 20, paddingHorizontal: 5,marginBottom:10 }}>
+            {/* <View style={{ marginTop: 20, paddingHorizontal: 5,marginBottom:10 }}>
               <Text style={{ fontWeight: 'bold' }}>Report</Text>
             
               <TextInput
@@ -311,24 +350,68 @@ const EventCollapsible = ({
     backgroundColor: 'white',height:100, textAlignVertical: 'top',}}
     // onChangeText={(text) => this.setState({text})}
     value={data?.report}/>
-              {/* <Text>{item?.report}</Text> */}
-            </View>
+          
+            </View> */}
+            {!data.isDone && (
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('attendance', {
+                      title: 'Add Participant Details',
+                      item: data,
+                    })
+                  }
+                  style={{
+                    paddingVertical: 10,
+                    backgroundColor: '#0B7CCE',
+                    flexGrow: 1,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white'}}>Edit Training</Text>
+                </TouchableOpacity>
+              </View>
+            )}
 
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('addEvent', { title: "Update Event" ,item:data})}
-                style={{
-                  paddingVertical: 10,
-                  backgroundColor: '#0B7CCE',
-                  flexGrow: 1,
-                  alignItems: 'center',
-                }}>
-                <Text style={{ color: 'white' }}>Edit</Text>
-              </TouchableOpacity>
+            {routeName === 'Participant List' && (
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    let options = {
+                      fileCache: true,
+                      addAndroidDownloads: {
+                        useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
+                        notification: true,
+                        description: 'Downloading image.',
+                      },
+                    };
+                    config(options)
+                      .fetch(
+                        'GET',
+                        `${
+                          getEnvVariable().base_api_url
+                        }/event/export-participant?id=${data?._id}`,
+                      )
+                      .then(res => {
+                        console.log('The file saved to ', res.path());
+                      })
+                      .catch(err => {
+                        console.log(err, 'error');
+                      });
+                  }}
+                  style={{
+                    paddingVertical: 10,
+                    backgroundColor: '#0B7CCE',
+                    flexGrow: 1,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white'}}>Download</Text>
+                </TouchableOpacity>
+              </View>
+            )}
 
-            </View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => navigation.navigate('attendance', { title: "Attendance" ,item:data})}
               style={{
                 paddingVertical: 10,
@@ -336,7 +419,7 @@ const EventCollapsible = ({
                 alignItems: 'center',
               }}>
               <Text style={{ color: 'white' }}>Attendance</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </Collapsible>
         </View>
       ) : null}

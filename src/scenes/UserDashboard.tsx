@@ -14,42 +14,63 @@ import {AuthRepositry} from '../services/AuthRepositry';
 import {EventRepositry} from '../services/EventRepositry';
 
 const UserDashboard = ({navigation, route}) => {
-
-
   const dispatch: any = useDispatch();
   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
     (state: any) => state.userLogin,
   );
+  const {slectedUserId} = useSelector((state: any) => state.selectUser);
   const {isRefresh} = useSelector((state: any) => state.event);
   const [data, setdata] = React.useState([
     {
       image: require('../assets/images/past_event.png'),
-      title: 'Past Event',
-      routeName: 'event',
-    },
-    {
-      image: require('../assets/images/attendance.png'),
-      title: 'Attendance',
-      routeName: 'attendancelist',
+      title: 'New Event',
+      routeName: 'addEvent',
     },
     {
       image: require('../assets/images/upcoming_event.png'),
-      title: 'Upcoming Event',
+      title: 'Event Done',
       routeName: 'event',
     },
     {
       image: require('../assets/images/new_event.png'),
       title: 'Ongoing Event',
-      routeName: 'newEvent',
+      routeName: 'event',
     },
+    {
+      image: require('../assets/images/attendance.png'),
+      title: 'Participant List',
+      routeName: 'event',
+    },
+
+    // {
+    //   image: require('../assets/images/past_event.png'),
+    //   title: 'Past Event',
+    //   routeName: 'event',
+    // },
+    // {
+    //   image: require('../assets/images/attendance.png'),
+    //   title: 'Attendance',
+    //   routeName: 'attendancelist',
+    // },
+    // {
+    //   image: require('../assets/images/upcoming_event.png'),
+    //   title: 'Upcoming Event',
+    //   routeName: 'event',
+    // },
+    // {
+    //   image: require('../assets/images/new_event.png'),
+    //   title: 'Ongoing Event',
+    //   routeName: 'newEvent',
+    // },
   ]);
   const logoutHandler = () => {
     dispatch(AuthRepositry.logout());
   };
 
   React.useEffect(() => {
-    dispatch(EventRepositry.getEventList());
-  }, [isRefresh]);
+    dispatch(EventRepositry.getEventList(slectedUserId));
+    console.log(slectedUserId, 'slectedUserId');
+  }, [isRefresh, slectedUserId]);
 
   React.useEffect(() => {
     if (isAdmin) {
@@ -67,7 +88,9 @@ const UserDashboard = ({navigation, route}) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{marginRight: 10,textTransform:'capitalize'}}>{user?.name}</Text>
+          <Text style={{marginRight: 10, textTransform: 'capitalize'}}>
+            {user?.name}
+          </Text>
           <TouchableOpacity
             onPress={logoutHandler}
             style={{

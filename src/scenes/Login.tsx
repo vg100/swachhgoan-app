@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  BackHandler 
+  BackHandler,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';

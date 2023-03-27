@@ -12,9 +12,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Collapsiblee from '../components/collapse';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
-const Supervisor = ({navigation, route}:any) => {
+const Supervisor = ({navigation, route}: any) => {
   const dispatch: any = useDispatch();
   const {users, isRefresh} = useSelector((state: any) => state.allUsers);
 
@@ -22,37 +22,35 @@ const Supervisor = ({navigation, route}:any) => {
     dispatch(AuthRepositry.getAllUser());
   }, [isRefresh]);
 
+  const deleteHandler = (id: any) => {
+    dispatch(AuthRepositry.deleteUser(id));
+  };
 
-
-  const deleteHandler=(id:any)=>{
-    dispatch(AuthRepositry.deleteUser(id))
-  }
-
-  const deleteSupervisorHandler = (id:any) => {
+  const deleteSupervisorHandler = (id: any) => {
     return Alert.alert(
-      "Are your sure?",
-      "Are you sure you want to remove this Supervisor?",
+      'Are your sure?',
+      'Are you sure you want to remove this Supervisor?',
       [
         {
-          text: "Yes",
-          onPress:()=>deleteHandler(id),
+          text: 'Yes',
+          onPress: () => deleteHandler(id),
         },
         {
-          text: "No",
+          text: 'No',
         },
-      ]
+      ],
     );
   };
 
+  const editHandler = (index: any) => {
+    navigation.navigate('addsupervisor', {
+      title: 'Edit Supervisor',
+      item: users[index],
+      mode: 'edit',
+    });
+  };
 
-
-  const editHandler=(index:any)=>{
-navigation.navigate("addsupervisor",{title:"Edit Supervisor",item:users[index],mode:'edit'})
-  }
-
-  const viewEventHandler=()=>{
-
-  }
+  const viewEventHandler = () => {};
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -89,13 +87,15 @@ navigation.navigate("addsupervisor",{title:"Edit Supervisor",item:users[index],m
         <FlatList
           data={users}
           renderItem={({item, index}) => {
-            return <Collapsiblee
-            index={index}
-            navigation={navigation} 
-            viewEventHandler={viewEventHandler}
-            editHandler={(index:any)=>editHandler(index)}
-            deleteHandler={(id:any)=>deleteSupervisorHandler(id)}
-            />;
+            return (
+              <Collapsiblee
+                index={index}
+                navigation={navigation}
+                viewEventHandler={viewEventHandler}
+                editHandler={(index: any) => editHandler(index)}
+                deleteHandler={(id: any) => deleteSupervisorHandler(id)}
+              />
+            );
           }}
         />
       }

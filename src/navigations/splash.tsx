@@ -15,7 +15,6 @@
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import { AsyncStorageService } from '../services/AsyncStorage';
 
-
 // const Splash = ({navigation, route}) => {
 //   const {user, loggedIn, loggingIn, isAdmin} = useSelector(
 //     (state: any) => state.userLogin,
@@ -42,6 +41,6 @@
 //         <Text>splash</Text>
 //     </View>
 //   )
-  
+
 // };
 // export default Splash;

@@ -12,19 +12,31 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AuthRepositry} from '../services/AuthRepositry';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {FloatingTitleTextInputField} from './floating_title_text_input_field';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
 const AddSupervisor = ({navigation, route}) => {
   const dispatch: any = useDispatch();
-  const role=route.params?.mode==='edit'?route.params?.item?.role==="USER"?0:1:0
-  const gender=route.params?.mode==='edit'?route.params?.item?.gender==="male"?0:1:0
+  const role =
+    route.params?.mode === 'edit'
+      ? route.params?.item?.role === 'USER'
+        ? 0
+        : 1
+      : 0;
+  const gender =
+    route.params?.mode === 'edit'
+      ? route.params?.item?.gender === 'male'
+        ? 0
+        : 1
+      : 0;
   const [selectedRole, setSelectedRole] = React.useState(role);
   const [selectedGender, setSelectedGender] = React.useState(gender);
   const [formValues, setFormValues] = React.useState({
-    name: route?.params?.item ? route?.params?.item?.name: '',
-    email: route?.params?.item ? route.params?.item?.email: '',
-    password: route?.params?.item ? route.params?.item?.passwordView: '',
-    phone_no:  route?.params?.item ? route.params?.item?.phone_no?.toString():''
+    name: route?.params?.item ? route?.params?.item?.name : '',
+    email: route?.params?.item ? route.params?.item?.email : '',
+    password: route?.params?.item ? route.params?.item?.passwordView : '',
+    phone_no: route?.params?.item
+      ? route.params?.item?.phone_no?.toString()
+      : '',
   });
   function _updateMasterState(attrName: any, value: any) {
     setFormValues(preval => {
@@ -46,36 +58,32 @@ const AddSupervisor = ({navigation, route}) => {
     navigation.goBack();
   };
 
-const updateHandler=()=>{
+  const updateHandler = () => {
+    dispatch(
+      AuthRepositry.updateSupervisor(route?.params?.item?._id, {
+        ...formValues,
+        role: selectedRole === 0 ? 'USER' : 'ADMIN',
+        gender: selectedGender === 0 ? 'male' : 'female',
+      }),
+    );
+    navigation.goBack();
+  };
 
-  dispatch(
-  AuthRepositry.updateSupervisor(route?.params?.item?._id,{
-    ...formValues,
-    role: selectedRole === 0 ? 'USER' : 'ADMIN',
-    gender: selectedGender === 0 ? 'male' : 'female',
-  }),
-  )
-  navigation.goBack();
-}
-
-
-const updateSupervisorHandler = () => {
-  return Alert.alert(
-    "Are your sure?",
-    "Are you sure you want to update this Supervisor?",
-    [
-      {
-        text: "Yes",
-        onPress:updateHandler,
-      },
-      {
-        text: "No",
-      },
-    ]
-  );
-};
-
-
+  const updateSupervisorHandler = () => {
+    return Alert.alert(
+      'Are your sure?',
+      'Are you sure you want to update this Supervisor?',
+      [
+        {
+          text: 'Yes',
+          onPress: updateHandler,
+        },
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
 
   return (
     <View
@@ -88,13 +96,17 @@ const updateSupervisorHandler = () => {
         attrName="name"
         title="Name"
         value={formValues.name}
-        isFieldActive={route.params?.mode==='edit' && formValues.name ?true:false}
+        isFieldActive={
+          route.params?.mode === 'edit' && formValues.name ? true : false
+        }
         updateMasterState={_updateMasterState}
       />
       <FloatingTitleTextInputField
         attrName="email"
         title="Email"
-        isFieldActive={route.params?.mode==='edit' && formValues.email ?true:false}
+        isFieldActive={
+          route.params?.mode === 'edit' && formValues.email ? true : false
+        }
         value={formValues.email}
         updateMasterState={_updateMasterState}
       />
@@ -102,15 +114,19 @@ const updateSupervisorHandler = () => {
       <FloatingTitleTextInputField
         attrName="password"
         title="Password"
-        isFieldActive={route.params?.mode==='edit' && formValues.password?true:false}
+        isFieldActive={
+          route.params?.mode === 'edit' && formValues.password ? true : false
+        }
         value={formValues.password}
         updateMasterState={_updateMasterState}
       />
 
-<FloatingTitleTextInputField
+      <FloatingTitleTextInputField
         attrName="phone_no"
         title="Phone No"
-        isFieldActive={route.params?.mode==='edit' && formValues.phone_no?true:false}
+        isFieldActive={
+          route.params?.mode === 'edit' && formValues.phone_no ? true : false
+        }
         value={formValues.phone_no}
         updateMasterState={_updateMasterState}
       />
@@ -206,7 +222,11 @@ const updateSupervisorHandler = () => {
       </View>
 
       <TouchableOpacity
-        onPress={route?.params?.mode==='edit'?updateSupervisorHandler:submitHandler}
+        onPress={
+          route?.params?.mode === 'edit'
+            ? updateSupervisorHandler
+            : submitHandler
+        }
         style={{
           alignItems: 'center',
           justifyContent: 'center',
@@ -217,8 +237,8 @@ const updateSupervisorHandler = () => {
           marginVertical: 8,
         }}>
         <Text style={{color: 'white'}}>
-          {route?.params?.mode==='edit'?"Update":"Submit"}
-          </Text>
+          {route?.params?.mode === 'edit' ? 'Update' : 'Submit'}
+        </Text>
       </TouchableOpacity>
     </View>
   );

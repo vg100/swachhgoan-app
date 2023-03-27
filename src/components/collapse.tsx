@@ -14,7 +14,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import Collapsible from 'react-native-collapsible';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 const Collapsiblee = ({
   children,
   title = '',
@@ -44,15 +44,14 @@ const Collapsiblee = ({
   editHandler,
   viewEventHandler,
   index,
-  loader
+  loader,
 }) => {
-
   let controlled = expanded !== null;
   const [show, setShow] = useState(initExpanded);
   const [mounted, setMounted] = useState(initExpanded);
   const {users, isRefresh} = useSelector((state: any) => state.allUsers);
   const rotateAnim = useRef(new Animated.Value(0)).current;
-
+  const dispatch = useDispatch();
   if (controlled) {
     if (!mounted && expanded) setMounted(true);
   }
@@ -148,19 +147,20 @@ const Collapsiblee = ({
             justifyContent: 'space-between',
           }}>
           <View>
-           
-            <View style={{alignItems:'center',flexDirection:'row'}}>
-            <Text
-              style={{
-                color: `#545454`,
-                fontWeight: 'bold',
-                lineHeight: 21,
-                fontSize: 20,
-            textTransform: 'capitalize',
-              }}>
-              {users[index]?.name}
-            </Text>
-            {isRefresh && (<ActivityIndicator style={{marginHorizontal:10}} size={15} />)}
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+              <Text
+                style={{
+                  color: `#545454`,
+                  fontWeight: 'bold',
+                  lineHeight: 21,
+                  fontSize: 20,
+                  textTransform: 'capitalize',
+                }}>
+                {users[index]?.name}
+              </Text>
+              {isRefresh && (
+                <ActivityIndicator style={{marginHorizontal: 10}} size={15} />
+              )}
             </View>
 
             <Text
@@ -211,7 +211,8 @@ const Collapsiblee = ({
           }}>
           <View
             style={{
-              backgroundColor: users[index]?.role === 'ADMIN' ? 'indianred' : 'green',
+              backgroundColor:
+                users[index]?.role === 'ADMIN' ? 'indianred' : 'green',
               paddingVertical: 0,
               paddingHorizontal: 5,
               borderRadius: 3,
@@ -221,7 +222,7 @@ const Collapsiblee = ({
                 fontWeight: 'bold',
                 lineHeight: 21,
                 color: users[index]?.role === 'ADMIN' ? 'white' : 'white',
-                textTransform:'capitalize'
+                textTransform: 'capitalize',
               }}>
               {users[index]?.role}
             </Text>
@@ -243,7 +244,7 @@ const Collapsiblee = ({
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TouchableOpacity
-                 onPress={()=>editHandler(index)}
+                onPress={() => editHandler(index)}
                 style={{
                   paddingVertical: 10,
                   backgroundColor: '#0B7CCE',
@@ -253,7 +254,7 @@ const Collapsiblee = ({
                 <Text style={{color: 'white'}}>Edit</Text>
               </TouchableOpacity>
               <TouchableOpacity
-              onPress={()=>deleteHandler(users[index]?._id)}
+                onPress={() => deleteHandler(users[index]?._id)}
                 style={{
                   paddingVertical: 10,
                   backgroundColor: 'red',
@@ -264,7 +265,10 @@ const Collapsiblee = ({
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              onPress={() => navigation.navigate('userstack')}
+              onPress={() => {
+                dispatch({type: 'setUser', payload: users[index]?._id});
+                navigation.navigate('userstack');
+              }}
               style={{
                 paddingVertical: 10,
                 backgroundColor: '#00A300',
